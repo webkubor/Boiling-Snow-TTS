@@ -24,10 +24,12 @@ chmod +x install.sh && ./install.sh
 ```
 
 ### 第二步：像写剧本一样改配置
-找到项目里的 `configs/config.json`，把你想说的话填进去：
-- `text`: 想让 AI 说的话。
-- `emotion`: 想要的情绪（比如：深沉、悲伤、激昂）。
-- `persona`: 想要的声音（默认用 `narrator` 说书人）。
+找到项目里的 `configs/config.json`，把你想说的话填进去。
+
+**💡 声音克隆技巧 (Voice Cloning)：**
+如果你想复刻某个声音，只需将该角色的 **任意长度原始录音** 放入目录：`assets/reference_audio/`，并命名为 `{角色名}_ref.mp3`。
+**无需手动剪辑**，项目内置的 AI 模块会自动为您截取最佳的 10 秒片段进行克隆。
+然后在 `config.json` 中把 `persona` 设置为该 `角色名`，并将 `model_type` 设为 `Base` 即可。
 
 ### 第三步：一键收片
 在终端运行：
