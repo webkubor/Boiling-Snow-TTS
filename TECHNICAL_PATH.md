@@ -2,16 +2,20 @@
 
 本项目已形成一套成熟的“武侠级”配音自动化生成标准，后续维护与 AI 执行需严格遵循此路径。
 
-## 🏗️ 架构蓝图 (System Architecture)
+## 🏗️ 架构蓝图 (System Architecture - Modular V2)
 
-- **入口指令**：`main.py`（指挥官模式）。
-  - `python main.py` ➡️ 加载 `movie_config.json`（微电影模式）。
-  - `python main.py podcast` ➡️ 加载 `podcast_config.json`（播客模式）。
-- **逻辑分层**：
-  - `core/engine.py`：负责 Apple Silicon (MPS/SDPA) 硬件加速与模型加载。
-  - `core/cloner.py`：克隆分支，内置 AI 自动裁剪、格式归一化、智能缓存。
-  - `core/designer.py`：捏人分支，纯文字指令驱动角色音色创造。
-  - `core/utils.py`：负责后期调音（静音留白、去噪、归一化）及元数据记录。
+本项目采用**模块化集群架构**，确保各核心功能完全隔离，互不干扰：
+
+- **指挥官 (`main.py`)**：负责加载配置与模式派发。
+- **原子化组件 (`core/processor.py`)**：
+  - **Ref-Opt (原声提取)**：独立负责样音的 1.5s 避障、脱水去噪与黄金 10s 截取。
+  - **Post-Tune (后期调音)**：独立负责成品的静音留白、归一化与平滑淡入淡出。
+- **四大功能模块 (`core/modes/`)**：
+  - `CloneMode`：单人音色复刻。
+  - `DesignMode`：凭空捏造音色。
+  - `DialogueMode`：多角色剧本生成与自动场景缝合。
+  - `PodcastMode`：月栖洲专栏深度定制流。
+- **后勤基座 (`core/engine.py`)**：负责硬件加速与模型加载。
 
 ## 📁 资产流转铁律 (Data Flow)
 

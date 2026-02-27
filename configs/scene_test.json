@@ -1,0 +1,26 @@
+{
+  "episode": "01",
+  "title": "林间偶遇",
+  "model_size": "1.7B",
+  "language": "Chinese",
+  "lines": [
+    {
+      "persona": "mu_xige",
+      "text": "喂！那个喝酒的道士，你鬼鬼祟祟跟着我师兄妹干什么？",
+      "emotion": "警惕、娇蛮",
+      "tone": "清脆少女音"
+    },
+    {
+      "persona": "ning_guanchen",
+      "text": "哎呀呀，慕姑娘误会了。这路又不是你家开的，贫道不过是酒瘾犯了，闻着你师兄那边的酒香寻过来的。",
+      "emotion": "调侃、慵懒",
+      "tone": "磁性烟嗓，带着笑意"
+    },
+    {
+      "persona": "mu_xige",
+      "text": "胡说！我师兄从不喝酒。再不走，当心我的流白剑不客气了！",
+      "emotion": "羞恼、威胁",
+      "tone": "语速加快"
+    }
+  ]
+}

@@ -30,7 +30,7 @@ def load_config(path):
     with open(path, 'r', encoding='utf-8') as f:
         return json.load(f)
 
-def generate_output_path(config, base_dir):
+def generate_output_path(config, base_dir, suffix=""):
     content_type = config.get("content_type", "movie")
     if content_type == "podcast":
         out_dir = os.path.join(base_dir, "assets/podcast_output")
@@ -38,57 +38,50 @@ def generate_output_path(config, base_dir):
         out_dir = os.path.join(base_dir, "assets/output_audio")
     os.makedirs(out_dir, exist_ok=True)
     
-    if config.get("output_filename"):
-        return os.path.join(out_dir, config["output_filename"])
+    persona_cn = get_persona_cn(config.get("persona", "多角色"))
+    is_dial = "lines" in config and isinstance(config["lines"], list)
+    mode_tag = "对话" if is_dial else ("设计" if config.get("model_type") == "VoiceDesign" else "克隆")
     
-    persona_cn = get_persona_cn(config.get("persona", "未知"))
-    mode_tag = "设计" if config.get("model_type") == "VoiceDesign" else "克隆"
-    
-    if content_type == "podcast":
-        filename = f"[播客]{config.get('title', '未命名专栏')}.wav"
-    else:
-        filename = f"[{mode_tag}]{persona_cn}_第{config.get('episode', 'X')}集_{config.get('title', '未命名')}.wav"
+    filename = f"[{mode_tag}]{persona_cn}_第{config.get('episode', 'X')}集_{config.get('title', '未命名')}{suffix}.wav"
     return os.path.join(out_dir, re.sub(r'[\/:*?"<>|]', '_', filename))
 
-def post_process_audio(input_path, content_type="movie"):
-    """【高级优化】后期调音：使用更鲁棒的去噪与留白逻辑"""
-    print(f"🪄 正在执行高级调音 (模式: {content_type})...")
+def trim_silence_manually(audio, threshold=-50.0, chunk_size=5):
+    def detect_leading_silence(sound):
+        iterate = 0
+        while iterate < len(sound) and sound[iterate:iterate+chunk_size].dBFS < threshold:
+            iterate += chunk_size
+        return iterate
+    start_idx = detect_leading_silence(audio)
+    end_idx = detect_leading_silence(audio.reverse())
+    return audio[start_idx : (len(audio) - end_idx)]
+
+def post_process_audio(input_path, content_type="movie", add_padding=True):
     try:
         audio = AudioSegment.from_file(input_path)
+        audio = trim_silence_manually(audio)
+        audio = audio.normalize(headroom=0.1).fade_in(50).fade_out(50)
         
-        # 1. 声音标准化（平衡响度）
-        audio = audio.normalize(headroom=0.1)
-        
-        # 2. 简单的首尾静音切除（Trim）
-        # 寻找音频中第一个非静音的位置
-        start_trim = audio.get_array_of_samples()
-        # 这里我们手动实现一个简单的切除，比 strip_silence 更稳
-        def detect_leading_silence(sound, silence_threshold=-50.0, chunk_size=10):
-            iterate = 0
-            while sound[iterate:iterate+chunk_size].dBFS < silence_threshold and iterate < len(sound):
-                iterate += chunk_size
-            return iterate
-
-        start_idx = detect_leading_silence(audio)
-        end_idx = detect_leading_silence(audio.reverse())
-        
-        # 执行切除
-        audio = audio[start_idx : (len(audio) - end_idx)]
-        
-        # 3. 强制留白：首 1.5s，尾 1s
-        silence_start = AudioSegment.silent(duration=1500)
-        silence_end = AudioSegment.silent(duration=1000)
-        
-        # 4. 平滑淡入淡出 (50ms)
-        audio = audio.fade_in(50).fade_out(50)
-        
-        combined = silence_start + audio + silence_end
-        combined.export(input_path, format="wav")
-        print("✅ 已成功执行首尾 Trim 并加入 1.5s 开场静音。")
-        return True
+        if add_padding:
+            silence_start = AudioSegment.silent(duration=1500)
+            silence_end = AudioSegment.silent(duration=1000)
+            audio = silence_start + audio + silence_end
+            
+        audio.export(input_path, format="wav")
+        return audio
     except Exception as e:
         print(f"⚠️ 后期调音失败: {e}")
-        return False
+        return None
+
+def merge_dialogue(segments, output_path, gap_ms=800):
+    print(f"🧵 正在缝合对话剧情 (角色间隔: {gap_ms}ms)...")
+    combined = AudioSegment.silent(duration=1500)
+    for i, seg in enumerate(segments):
+        combined += seg
+        if i < len(segments) - 1:
+            combined += AudioSegment.silent(duration=gap_ms)
+    combined += AudioSegment.silent(duration=1000)
+    combined.export(output_path, format="wav")
+    print(f"✅ 对话场景缝合完成！")
 
 def log_generation_metadata(config, audio_path, base_dir):
     meta_dir = os.path.join(base_dir, "assets/metadata")
@@ -98,7 +91,7 @@ def log_generation_metadata(config, audio_path, base_dir):
     
     new_record = {
         "audio_file": os.path.basename(audio_path),
-        "text": config.get("text", ""),
+        "text": config.get("text", "对话集锦"),
         "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     }
     
