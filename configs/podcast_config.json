@@ -2,11 +2,11 @@
   "content_type": "podcast",
   "model_type": "VoiceDesign",
   "model_size": "1.7B",
-  "persona": "xiao_mo",
-  "title": "小墨V2试音",
-  "text": "月老师！月老师快看！我这回在档案室翻出来的宝贝，是不是超厉害的？这可是我找了好几个晚上才捞上来的‘大鱼’，你可得好好夸夸我哦！",
-  "emotion": "娇憨、元气、极其清甜",
-  "tone": "十八岁元气少女音，清脆灵动，现代甜美风，语气带点撒娇感",
+  "persona": "yue_qizhou",
+  "title": "月栖洲V3.1自然磁性版试音",
+  "text": "影画如江湖，乐起……如剑出。我是月栖洲。在这个喧嚣的世界，我只想安静地，陪你找回那段失落的余响。咱们这就开始吧。",
+  "emotion": "温和、知性、利落",
+  "tone": "三十岁成熟磁性男声，微沙哑，语速自然适中，谈吐利落，充满亲和力与叙事张力",
   "language": "Chinese",
-  "output_filename": "设计_小墨_V2元气试音.wav"
+  "output_filename": "设计_月栖洲_V3.1自然磁性版试音.wav"
 }

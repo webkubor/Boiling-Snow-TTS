@@ -1,11 +1,12 @@
 {
-  "model_type": "Base",
+  "model_type": "VoiceDesign",
   "model_size": "1.7B",
-  "persona": "ning_guanchen",
-  "episode": "Character",
-  "title": "宁观尘MP3版本试音",
-  "text": "酒是半截的真，话是陈年的好。我是宁观尘，一介游方道士。这世间的万物皆有回响，而我，只听那一抹失传的惊鸿。慕姑娘，跟紧了，别掉进贫道的阵里。",
-  "emotion": "洒脱、随性、仙风道骨",
-  "tone": "磁性男声，语调轻盈，略带酒后的慵懒感",
-  "language": "Chinese"
+  "persona": "qing_ling",
+  "episode": "Test",
+  "title": "新女声试音_清灵",
+  "text": "你好呀！我是清灵。这江湖路远，要是没有我这么清脆的声音陪着你，那该多无聊啊！",
+  "emotion": "活泼、俏皮、充满朝气",
+  "tone": "十八岁清脆少女音，音色透亮如风铃，语速轻快，充满元气",
+  "language": "Chinese",
+  "output_filename": "设计_清灵_18岁清脆试音.wav"
 }
