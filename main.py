@@ -12,7 +12,6 @@ from core.modes.podcast import PodcastMode
 def main():
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     
-    # 1. 配置加载路由
     config_name = "movie_config.json"
     if len(sys.argv) > 1:
         arg = sys.argv[1].lower()
@@ -20,57 +19,45 @@ def main():
     
     cfg = load_config(os.path.join(BASE_DIR, "configs", config_name))
     
-    # 2. 初始化引擎与处理器
-    mode_type = cfg.get("model_type", "Base")
     m_size = cfg.get("model_size", "1.7B")
+    mode_type = cfg.get("model_type", "Base")
     engine = TTSBaseEngine(mode_type, m_size)
     processor = AudioProcessor(BASE_DIR)
     
-    # 3. 实例化功能模块
     cloner = CloneMode(engine, processor)
     designer = DesignMode(engine, processor)
     dialogue = DialogueMode(engine, processor, cloner)
     podcast = PodcastMode(engine, processor, cloner)
     
     content_type = cfg.get("content_type", "movie")
-    is_dial = "lines" in config_lines if (config_lines := cfg.get("lines")) and isinstance(config_lines, list) else False
+    is_dial = "lines" in cfg and isinstance(cfg["lines"], list)
     
     # --- 4. 智能路由派发 ---
     
     if mode_type == "VoiceDesign":
         instruct = f"{cfg.get('tone','')}, {cfg.get('emotion','')}".strip(", ")
-        wavs, sr = designer.run(cfg["text"], cfg.get("language","Chinese"), instruct)
+        wavs, sr = designer.run(cfg.get("text", ""), cfg.get("language","Chinese"), instruct)
         final_path = generate_output_path(cfg, BASE_DIR)
         sf.write(final_path, wavs[0], sr)
-        
-        # --- 【资产隔离修复】捏出来的种子存入专用样音库，不污染原声资产库 ---
         persona_cn = get_persona_cn(cfg.get('persona'))
-        ref_name = f"{persona_cn}_参考.wav"
-        seed_path = os.path.join(BASE_DIR, "assets/designed_seeds", ref_name)
-        sf.write(seed_path, wavs[0], sr)
-        
-        # 同步脱水入库 temp
-        processor.extract_voice_seed(seed_path, persona_cn)
-        print(f"✅ 角色音色已同步至【样音库】与 temp 缓存：{persona_cn}")
-        
+        ref_path = os.path.join(BASE_DIR, "assets/designed_seeds", f"{persona_cn}_参考.wav")
+        sf.write(ref_path, wavs[0], sr)
+        processor.extract_voice_seed(ref_path, persona_cn)
         processor.apply_post_tuning(final_path)
 
     elif is_dial:
+        # 对话模式内部处理了分轨和调音
         final_path = dialogue.run(cfg)
 
     elif content_type == "podcast":
         wavs, sr, _ = podcast.run(cfg)
-        if wavs:
-            final_path = generate_output_path(cfg, BASE_DIR)
-            sf.write(final_path, wavs[0], sr)
-            processor.apply_post_tuning(final_path)
-        else:
-            # 对谈模式已由 podcast.run 处理
-            final_path = generate_output_path(cfg, BASE_DIR)
+        final_path = generate_output_path(cfg, BASE_DIR)
+        sf.write(final_path, wavs[0], sr)
+        processor.apply_post_tuning(final_path)
 
     else:
         instruct = f"{cfg.get('tone','')}, {cfg.get('emotion','')}".strip(", ")
-        wavs, sr = cloner.run(cfg.get("persona"), cfg["text"], cfg.get("language","Chinese"), instruct)
+        wavs, sr = cloner.run(cfg.get("persona"), cfg.get("text", ""), cfg.get("language","Chinese"), instruct)
         final_path = generate_output_path(cfg, BASE_DIR)
         sf.write(final_path, wavs[0], sr)
         processor.apply_post_tuning(final_path)
