@@ -24,12 +24,14 @@ with open(CONFIG_PATH, 'r', encoding='utf-8') as f:
 
 text_to_generate = config.get("text", "")
 persona = config.get("persona", "narrator")
-model_size = config.get("model_size", "0.6B")
+model_type = config.get("model_type", "Base") # 新增模型类型：Base, CustomVoice, VoiceDesign
+model_size = config.get("model_size", "1.7B")
 language = config.get("language", "Chinese")
 emotion = config.get("emotion", "")
 tone = config.get("tone", "")
 episode = config.get("episode", "")
 title = config.get("title", "")
+speaker = config.get("speaker", "Vivian") # 仅 CustomVoice 使用
 
 # 动态生成中文文件名
 persona_map = {
@@ -48,53 +50,64 @@ if not output_filename.endswith(".wav"):
     output_filename += ".wav"
 
 # 动态确定模型路径
-MODEL_PATH = os.path.join(BASE_DIR, f"models/Base-{model_size}")
+MODEL_PATH = os.path.join(BASE_DIR, f"models/{model_type}-{model_size}")
 if not os.path.exists(MODEL_PATH):
-    print(f"⚠️ 警告：模型 {MODEL_PATH} 不存在，回退到 Base-0.6B")
+    print(f"⚠️ 警告：路径 {MODEL_PATH} 不存在，尝试默认 Base-0.6B")
     MODEL_PATH = os.path.join(BASE_DIR, "models/Base-0.6B")
 
-# 探测设备：优先 MPS (GPU) 以利用 M3 Pro 性能
+# 探测设备
 device = "mps" if torch.backends.mps.is_available() else "cpu"
 dtype = torch.bfloat16 if device == "mps" else torch.float32
 
-print(f"🚀 正在加载模型 ({model_size}) 到 {device.upper()}，精度: {dtype}...")
+print(f"🚀 正在加载模型 [{model_type}-{model_size}] 到 {device.upper()}...")
 
 try:
     model = Qwen3TTSModel.from_pretrained(
         MODEL_PATH,
         device_map=device,
         dtype=dtype,
-        # 使用 SDPA (Mac 原生加速)，消除 flash-attn 警告并提升速度
         attn_implementation="sdpa" 
     )
 except Exception as e:
-    print(f"⚠️ MPS 加速启动失败，正在回退到 CPU 模式... (原因: {e})")
-    model = Qwen3TTSModel.from_pretrained(
-        MODEL_PATH,
-        device_map="cpu",
-        dtype=torch.float32
+    print(f"⚠️ 硬件加速启动失败，回退到 CPU... ({e})")
+    model = Qwen3TTSModel.from_pretrained(MODEL_PATH, device_map="cpu", dtype=torch.float32)
+
+# 构建指令/描述
+instruct = f"{tone}，{emotion}".strip("，")
+
+# 执行生成逻辑
+print(f"🎙️ 正在生成配音 | 模式: {model_type}...")
+
+if model_type == "VoiceDesign":
+    print(f"🎨 音色设计描述：{instruct}")
+    wavs, sr = model.generate_voice_design(
+        text=text_to_generate,
+        language=language,
+        instruct=instruct
+    )
+elif model_type == "CustomVoice":
+    print(f"👤 使用预设音色：{speaker} | 语气：{instruct}")
+    wavs, sr = model.generate_custom_voice(
+        text=text_to_generate,
+        speaker=speaker,
+        language=language,
+        instruct=instruct
+    )
+else: # 默认 Base 克隆模式
+    ref_audio_name = f"{persona}_ref.mp3"
+    ref_audio = os.path.join(REF_DIR, ref_audio_name)
+    if not os.path.exists(ref_audio):
+        ref_audio = os.path.join(REF_DIR, "narrator_ref.mp3")
+    
+    print(f"👥 调用音色参考：{ref_audio} | 语气：{instruct}")
+    wavs, sr = model.generate_voice_clone(
+        text=text_to_generate,
+        language=language,
+        ref_audio=ref_audio,
+        x_vector_only_mode=True
     )
 
-# 动态确定参考音频路径
-ref_audio_name = f"{persona}_ref.mp3"
-ref_audio = os.path.join(REF_DIR, ref_audio_name)
-
-if not os.path.exists(ref_audio):
-    print(f"⚠️ 警告：参考音频 {ref_audio} 不存在，将使用默认 narrator_ref.mp3")
-    ref_audio = os.path.join(REF_DIR, "narrator_ref.mp3")
-
-print(f"🎙️ 正在调用【{persona_cn}】音色生成配音...")
-if emotion or tone:
-    print(f"🎭 指令控制：{tone} | {emotion}")
-
-wavs, sr = model.generate_voice_clone(
-    text=text_to_generate,
-    language=language,
-    ref_audio=ref_audio,
-    x_vector_only_mode=True, 
-)
-
-# 保存至项目内的生成目录
+# 保存文件
 output_file = os.path.join(OUT_DIR, output_filename)
 sf.write(output_file, wavs[0], sr)
-print(f"✨ 老爹，生成完成！文件已存放在：{output_file}")
+print(f"✨ 生成完成！文件已存放在：{output_file}")
