@@ -21,12 +21,15 @@ class PodcastMode:
                 
                 wavs, sr = self.cloner.run(persona, text, config.get("language","Chinese"), instruct)
                 
+                # 导出分轨
                 temp_path = generate_output_path(config, self.engine.base_dir, suffix=f"_seg{i+1}")
                 sf.write(temp_path, wavs[0], sr)
                 
-                seg = self.processor.apply_post_tuning(temp_path, mode="podcast", add_padding=False)
+                # 【修正】调用最新的统一调音接口
+                seg = self.processor.apply_post_tuning(temp_path)
                 if seg: segments.append(seg)
             
+            # 场景缝合
             final_path = generate_output_path(config, self.engine.base_dir)
             self.processor.merge_scene(segments, final_path, gap_ms=1000)
             return None, 0, final_path

@@ -1,12 +1,11 @@
 {
-  "model_type": "VoiceDesign",
+  "model_type": "Base",
   "model_size": "1.7B",
-  "persona": "qing_ling",
+  "persona": "jianghu_laoren",
   "episode": "Test",
-  "title": "新女声试音_清灵",
-  "text": "你好呀！我是清灵。这江湖路远，要是没有我这么清脆的声音陪着你，那该多无聊啊！",
-  "emotion": "活泼、俏皮、充满朝气",
-  "tone": "十八岁清脆少女音，音色透亮如风铃，语速轻快，充满元气",
-  "language": "Chinese",
-  "output_filename": "设计_清灵_18岁清脆试音.wav"
+  "title": "江湖老人试音",
+  "text": "年轻人，看你步履匆匆，可是要去那天门关？那里的风，可比这儿烈得多，也冷得多啊。",
+  "emotion": "沧桑、和蔼、深不可测",
+  "tone": "老者音色，语气悠长，带着岁月的沉淀",
+  "language": "Chinese"
 }
