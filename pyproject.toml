@@ -3,9 +3,9 @@ requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "qwen-tts"
-version = "0.1.1"
-description = "Qwen-TTS python package"
+name = "boiling-snow-tts"
+version = "0.1.0"
+description = "An AI voice generation engine tailored for Wuxia content, powered by Qwen3-TTS."
 readme = "README.md"
 requires-python = ">=3.9"
 classifiers = [
@@ -17,7 +17,7 @@ classifiers = [
   "Programming Language :: Python :: 3.13",
 ]
 license = { text = "Apache-2.0" }
-authors = [{ name = "Alibaba Qwen Team" }]
+authors = [{ name = "Webkubor" }]
 
 dependencies = [
   "transformers==4.57.3",
@@ -29,11 +29,12 @@ dependencies = [
   "sox",
   "onnxruntime",
   "einops",
+  "pydub",
 ]
 
 [project.urls]
-Homepage = "https://github.com/Qwen/Qwen3-TTS"
-Repository = "https://github.com/Qwen/Qwen3-TTS"
+Homepage = "https://github.com/webkubor/Boiling-Snow-TTS"
+Repository = "https://github.com/webkubor/Boiling-Snow-TTS"
 
 [project.scripts]
 qwen-tts-demo = "qwen_tts.cli.demo:main"
