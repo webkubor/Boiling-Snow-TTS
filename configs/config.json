@@ -2,9 +2,10 @@
   "episode": "09",
   "title": "暗坊深水：旧名与信物",
   "persona": "narrator",
+  "model_size": "1.7B",
   "text": "万宝楼内，人人戴面具，个个藏杀机。宁观尘盯着那截银色枪缨，终于听到了那个尘封十三年的名字——夜惊鸿。从黑市弃子到天榜第一，这枪尖下的秘密，比这暗坊的水，还要深。",
-  "emotion": "深沉、略带肃杀",
-  "tone": "低沉有力",
+  "emotion": "深沉、肃杀、带有江湖沧桑感",
+  "tone": "低沉、沙哑、有力",
   "language": "Chinese",
-  "output_filename": "narrator_ep09_intro.wav"
+  "output_filename": "旁白_第九集_暗坊深水.wav"
 }
