@@ -1,0 +1,28 @@
+{
+  "episode": "Scene",
+  "title": "花楼隔窗听壁脚",
+  "model_size": "1.7B",
+  "language": "Chinese",
+  "is_dialogue": true,
+  "lines": [
+    {
+      "persona": "hu_yao",
+      "text": "嗯……官人……慢些嘛……（轻喘）……奴家这身子……都快被你揉碎了……呵呵……",
+      "emotion": "极度诱惑、娇嗔、呼吸急促",
+      "tone": "二十岁狐媚音，极致贴耳，声音软得能滴出水来，带有强烈的气声"
+    },
+    {
+      "persona": "jianghu_laoren",
+      "text": "小妖精……（重呼吸）……看你今天还往哪儿躲……呼……呼……",
+      "emotion": "沉迷、欲望、粗重",
+      "tone": "磁性男低音，粗重喘息，声音压抑且厚实"
+    },
+    {
+      "persona": "hu_yao",
+      "text": "啊……奴家不躲……（娇吟）……奴家只怕……官人……舍不得……呵呵呵……嗯……",
+      "emotion": "魅惑、放浪、余音袅袅",
+      "tone": "高频娇喘，尾音上扬，富有挑逗性"
+    }
+  ],
+  "output_filename": "场景_花楼沉浸式壁脚.wav"
+}
