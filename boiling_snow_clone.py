@@ -5,6 +5,7 @@ import os
 import json
 import re
 import sys
+from pydub import AudioSegment
 
 # 开启 Mac MPS 兼容性支持
 os.environ["PYTORCH_ENABLE_MPS_FALLBACK"] = "1"
@@ -14,6 +15,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ASSETS_DIR = os.path.join(BASE_DIR, "assets")
 REF_DIR = os.path.join(ASSETS_DIR, "reference_audio")
 OUT_DIR = os.path.join(ASSETS_DIR, "output_audio")
+TEMP_DIR = os.path.join(ASSETS_DIR, "temp") # 存放自动剪辑的中间件
 CONFIG_PATH = os.path.join(BASE_DIR, "configs/config.json")
 
 def load_config():
@@ -37,7 +39,6 @@ def generate_filename(config):
     persona_map = {"narrator": "旁白", "xiao_jinxian": "萧烬弦", "gu_qiyue": "顾栖月", "mu_xige": "慕夕歌"}
     persona_cn = persona_map.get(persona, persona)
     
-    # 构造：[模式]角色_第X集_标题
     mode_tag = "设计" if model_type == "VoiceDesign" else "克隆"
     name = f"[{mode_tag}]{persona_cn}_第{episode}集_{title}.wav"
     return re.sub(r'[\/:*?"<>|]', '_', name)
@@ -63,27 +64,48 @@ class BoilingSnowEngine:
             attn_implementation="sdpa"
         )
 
+    def _auto_clip_audio(self, audio_path, max_sec=10):
+        """AI 自动化处理：自动检测并裁剪参考音频至最佳长度 (8-10s)"""
+        os.makedirs(TEMP_DIR, exist_ok=True)
+        try:
+            audio = AudioSegment.from_file(audio_path)
+            duration_sec = len(audio) / 1000.0
+            
+            if duration_sec > max_sec:
+                print(f"✂️ AI 自动剪辑：参考音频过长 ({duration_sec:.1f}s)，正在裁剪前 {max_sec}s...")
+                clipped_audio = audio[:max_sec * 1000]
+                temp_path = os.path.join(TEMP_DIR, f"clipped_{os.path.basename(audio_path)}")
+                clipped_audio.export(temp_path, format="mp3")
+                return temp_path
+            return audio_path
+        except Exception as e:
+            print(f"⚠️ 自动剪辑失败，将直接使用原始音频... ({e})")
+            return audio_path
+
     def run_cloning(self, text, persona, language, instruct):
-        """【模式 A】声音克隆：严格依赖参考音频"""
+        """【模式 A】声音克隆：严格依赖参考音频，支持 AI 自动裁剪"""
         ref_audio = os.path.join(REF_DIR, f"{persona}_ref.mp3")
         if not os.path.exists(ref_audio):
             print(f"⚠️ 参考音色 {persona} 不存在，使用默认说书人")
             ref_audio = os.path.join(REF_DIR, "narrator_ref.mp3")
         
-        print(f"👥 模式：声音克隆 | 参考：{os.path.basename(ref_audio)} | 语气：{instruct}")
+        # 核心：执行 AI 自动裁剪逻辑
+        processed_ref = self._auto_clip_audio(ref_audio)
+        
+        print(f"👥 模式：声音克隆 | 参考：{os.path.basename(processed_ref)} | 语气：{instruct}")
         return self.model.generate_voice_clone(
-            text=text, language=language, ref_audio=ref_audio, x_vector_only_mode=True
+            text=text, language=language, ref_audio=processed_ref, x_vector_only_mode=True
         )
 
     def run_design(self, text, language, instruct):
-        """【模式 B】音色设计：严格基于文字描述，不使用参考音频"""
+        """【模式 B】音色设计：严格基于文字描述"""
         print(f"🎨 模式：音色设计 | 描述指令：{instruct}")
         return self.model.generate_voice_design(
             text=text, language=language, instruct=instruct
         )
 
     def run_preset(self, text, speaker, language, instruct):
-        """【模式 C】预设音色：使用官方固定精品库"""
+        """【模式 C】预设音色"""
         print(f"👤 模式：预设音色 | 角色：{speaker} | 语气：{instruct}")
         return self.model.generate_custom_voice(
             text=text, speaker=speaker, language=language, instruct=instruct
@@ -94,15 +116,12 @@ if __name__ == "__main__":
     os.makedirs(OUT_DIR, exist_ok=True)
     cfg = load_config()
     
-    # 初始化隔离引擎
     engine = BoilingSnowEngine(cfg.get("model_type", "Base"), cfg.get("model_size", "1.7B"))
     
-    # 提取参数
     text = cfg.get("text", "")
     lang = cfg.get("language", "Chinese")
     instruct = f"{cfg.get('tone', '')}，{cfg.get('emotion', '')}".strip("，")
     
-    # 路由派发，确保逻辑完全隔离
     m_type = cfg.get("model_type", "Base")
     if m_type == "VoiceDesign":
         wavs, sr = engine.run_design(text, lang, instruct)
@@ -111,7 +130,6 @@ if __name__ == "__main__":
     else:
         wavs, sr = engine.run_cloning(text, cfg.get("persona", "narrator"), lang, instruct)
 
-    # 导出
     out_name = cfg.get("output_filename") or generate_filename(cfg)
     out_path = os.path.join(OUT_DIR, out_name)
     sf.write(out_path, wavs[0], sr)
