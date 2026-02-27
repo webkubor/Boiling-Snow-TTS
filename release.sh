@@ -38,7 +38,11 @@ echo "🧹 Cleaning old builds..."
 rm -rf dist/ build/ *.egg-info/
 
 echo "📦 Building source and wheel packages..."
-python3 -m build
+if [ -f "./.venv/bin/python" ]; then
+    ./.venv/bin/python -m build
+else
+    python3 -m build
+fi
 
 # 5. 发布到 GitHub (使用提取的更新日志)
 if command -v gh &> /dev/null; then
