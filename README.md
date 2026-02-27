@@ -16,6 +16,22 @@
 3. **流程繁琐**：通过 **JSON 驱动模式**，实现了文案与代码的彻底解耦。创作者只需改 JSON，AI 自动生成带中文标题的成品。
 4. **性能优化**：针对 **Apple M3 Pro (MPS)** 进行了原生硬件加速，让 1.7B 大模型在 Mac 上也能秒级出片。
 
+## ⚔️ 核心功能模块 (Core Modules)
+
+本项目严格区分并隔离了以下两大核心功能，互不干扰：
+
+### 1. 声音克隆 (Voice Cloning) - `Base` 模式
+- **逻辑**：AI 学习您提供的 **参考音频** (`assets/reference_audio/`)。
+- **触发**：在 `config.json` 中设置 `"model_type": "Base"`。
+- **特点**：100% 还原特定人物（如说书人）的音色。
+
+### 2. 音色设计 (Voice Design) - `VoiceDesign` 模式
+- **逻辑**：AI 根据您的 **文字描述指令** (`emotion` & `tone`) 凭空捏造声音。
+- **触发**：在 `config.json` 中设置 `"model_type": "VoiceDesign"`。
+- **特点**：无需任何参考音频，只需描述即可创造独特的江湖角色。
+
+---
+
 ## 🚀 硬件加速优化 (Hardware Acceleration)
 
 本项目核心脚本 `boiling_snow_clone.py` 已针对 **Apple Silicon (M1/M2/M3)** 芯片进行深度原生优化，确保极速生成体验：
