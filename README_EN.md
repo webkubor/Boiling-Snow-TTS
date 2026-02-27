@@ -75,7 +75,7 @@ Edit `configs/config.json`:
 Run the unified engine:
 ```bash
 source .venv/bin/activate
-python boiling_snow_clone.py
+python main.py
 ```
 The output will be saved in `assets/output_audio/`.
 

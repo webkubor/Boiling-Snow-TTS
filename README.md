@@ -72,7 +72,7 @@ chmod +x install.sh && ./install.sh
 ### 3. 启动引擎
 ```bash
 source .venv/bin/activate
-python boiling_snow_clone.py
+python main.py
 ```
 
 ---
