@@ -40,24 +40,25 @@ class AudioProcessor:
         e = detect(audio.reverse())
         return audio[s : (len(audio) - e)]
 
-    def apply_post_tuning(self, path, mode="movie", add_padding=True):
-        """【独立功能：Post-Tune】成品后期优化"""
+    def apply_post_tuning(self, path, mode="movie", add_padding=False):
+        """【独立功能：Post-Tune】成品后期优化：去除强制留白，实现直接开嗓"""
         try:
             audio = AudioSegment.from_file(path)
+            # 切除首尾静音/杂音，确保紧凑
             audio = self._trim_silence(audio)
+            # 响度标准化 + 极短淡入淡出（防爆音）
             audio = audio.normalize(headroom=0.1).fade_in(50).fade_out(50)
-            if add_padding:
-                s_ms = 1500 if mode == "podcast" else 1500
-                audio = AudioSegment.silent(duration=s_ms) + audio + AudioSegment.silent(duration=1000)
+            
+            # 根据老爹指令，不再添加任何首尾静音处理
             audio.export(path, format="wav")
             return audio
         except: return None
 
     def merge_scene(self, segments, output_path, gap_ms=800):
-        """【独立功能：缝合】"""
-        combined = AudioSegment.silent(duration=1500)
+        """【独立功能：缝合】去除开场/结尾留白"""
+        print(f"🧵 正在缝合剧情 (无预留白直接开启)...")
+        combined = AudioSegment.empty()
         for i, seg in enumerate(segments):
             combined += seg
             if i < len(segments) - 1: combined += AudioSegment.silent(duration=gap_ms)
-        combined += AudioSegment.silent(duration=1000)
         combined.export(output_path, format="wav")
