@@ -1,12 +1,11 @@
 {
-  "model_type": "VoiceDesign",
+  "model_type": "Base",
   "model_size": "1.7B",
-  "persona": "meng_zhu",
-  "episode": "Character",
-  "title": "六维公式试音_梦竹",
-  "text": "你说，这世间的相遇……是不是都像这晨露一样，见不得光……稍纵即逝？我总想留住些什么，可到头来，连这琴声……也散了。",
-  "emotion": "淡淡的忧伤、不谙世事的天真",
-  "tone": "【人物角色】一位纯净美好的艺术系少女，古典柔美、纯净知性；【语调】东方温婉感，轻柔舒缓，起伏平缓；【语速】偏慢，从容沉静，字句清晰；【语气】轻盈温和，带有一种林黛玉式的易碎感；【氛围】沉静清澈且朦胧，如薄雾中的晨露或静谧月光；【尾音】轻微自然收束，略带气声，尾音会轻轻打个颤。",
-  "language": "Chinese",
-  "output_filename": "设计_梦竹_六维黄金公式试音.wav"
+  "persona": "shadow",
+  "episode": "Test",
+  "title": "影子克隆测试",
+  "text": "黑暗中，唯有寒芒一现。这便是我的道。",
+  "emotion": "幽冷、死寂",
+  "tone": "影子原声",
+  "language": "Chinese"
 }

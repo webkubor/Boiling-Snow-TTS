@@ -21,8 +21,9 @@ def main():
     cfg = load_config(os.path.join(BASE_DIR, "configs", config_name))
     
     # 2. 初始化引擎与处理器
+    mode_type = cfg.get("model_type", "Base")
     m_size = cfg.get("model_size", "1.7B")
-    engine = TTSBaseEngine(cfg.get("model_type", "Base"), m_size)
+    engine = TTSBaseEngine(mode_type, m_size)
     processor = AudioProcessor(BASE_DIR)
     
     # 3. 实例化功能模块
@@ -31,9 +32,8 @@ def main():
     dialogue = DialogueMode(engine, processor, cloner)
     podcast = PodcastMode(engine, processor, cloner)
     
-    mode_type = cfg.get("model_type", "Base")
     content_type = cfg.get("content_type", "movie")
-    is_dial = "lines" in cfg and isinstance(cfg["lines"], list)
+    is_dial = "lines" in config_lines if (config_lines := cfg.get("lines")) and isinstance(config_lines, list) else False
     
     # --- 4. 智能路由派发 ---
     
@@ -43,25 +43,30 @@ def main():
         final_path = generate_output_path(cfg, BASE_DIR)
         sf.write(final_path, wavs[0], sr)
         
-        # 设计入库
+        # --- 【资产隔离修复】捏出来的种子存入专用样音库，不污染原声资产库 ---
         persona_cn = get_persona_cn(cfg.get('persona'))
         ref_name = f"{persona_cn}_参考.wav"
-        ref_path = os.path.join(BASE_DIR, "assets/reference_audio", ref_name)
-        sf.write(ref_path, wavs[0], sr)
-        processor.extract_voice_seed(ref_path, persona_cn)
+        seed_path = os.path.join(BASE_DIR, "assets/designed_seeds", ref_name)
+        sf.write(seed_path, wavs[0], sr)
         
-        # 统一执行原子化调音
+        # 同步脱水入库 temp
+        processor.extract_voice_seed(seed_path, persona_cn)
+        print(f"✅ 角色音色已同步至【样音库】与 temp 缓存：{persona_cn}")
+        
         processor.apply_post_tuning(final_path)
 
     elif is_dial:
-        # 对话模式 (其内部已包含分轨处理与总轨缝合)
         final_path = dialogue.run(cfg)
 
     elif content_type == "podcast":
         wavs, sr, _ = podcast.run(cfg)
-        final_path = generate_output_path(cfg, BASE_DIR)
-        sf.write(final_path, wavs[0], sr)
-        processor.apply_post_tuning(final_path)
+        if wavs:
+            final_path = generate_output_path(cfg, BASE_DIR)
+            sf.write(final_path, wavs[0], sr)
+            processor.apply_post_tuning(final_path)
+        else:
+            # 对谈模式已由 podcast.run 处理
+            final_path = generate_output_path(cfg, BASE_DIR)
 
     else:
         instruct = f"{cfg.get('tone','')}, {cfg.get('emotion','')}".strip(", ")
