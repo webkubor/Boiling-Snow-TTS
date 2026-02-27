@@ -8,7 +8,7 @@ os.environ["PYTORCH_ENABLE_MPS_FALLBACK"] = "1"
 
 print("🚀 正在加载模型 (Base-0.6B) 到 CPU...")
 model = Qwen3TTSModel.from_pretrained(
-    "/Users/webkubor/Desktop/Qwen3-TTS/models/Base-0.6B",
+    "/Users/webkubor/Desktop/Boiling-Snow-TTS/models/Base-0.6B",
     device_map="cpu",  # 暂时改回 CPU 以解决 MPS 下的稳定性问题
     dtype=torch.float32 # CPU 上 float32 更稳定
 )
@@ -17,7 +17,7 @@ model = Qwen3TTSModel.from_pretrained(
 # 旁白/说书人音色参考：assets/reference_audio/narration_narrator_ref.mp3 (原 xiaojinxuan_ref.mp3)
 # 自动剪裁逻辑已在内存中记录，此处固定路径
 
-ASSETS_DIR = "/Users/webkubor/Desktop/Qwen3-TTS/assets"
+ASSETS_DIR = "/Users/webkubor/Desktop/Boiling-Snow-TTS/assets"
 REF_DIR = os.path.join(ASSETS_DIR, "reference_audio")
 OUT_DIR = os.path.join(ASSETS_DIR, "output_audio")
 

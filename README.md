@@ -1,23 +1,23 @@
-# Qwen3-TTS
+# Boiling-Snow-TTS
 
 <br>
 
 <p align="center">
-    <img src="https://qianwen-res.oss-cn-beijing.aliyuncs.com/Qwen3-TTS-Repo/qwen3_tts_logo.png" width="400"/>
+    <img src="https://qianwen-res.oss-cn-beijing.aliyuncs.com/Boiling-Snow-TTS-Repo/qwen3_tts_logo.png" width="400"/>
 <p>
 
 <p align="center">
-&nbsp&nbsp🤗 <a href="https://huggingface.co/collections/Qwen/qwen3-tts">Hugging Face</a>&nbsp&nbsp | &nbsp&nbsp🤖 <a href="https://modelscope.cn/collections/Qwen/Qwen3-TTS">ModelScope</a>&nbsp&nbsp | &nbsp&nbsp📑 <a href="https://qwen.ai/blog?id=qwen3tts-0115">Blog</a>&nbsp&nbsp | &nbsp&nbsp📑 <a href="https://arxiv.org/abs/2601.15621">Paper</a>&nbsp&nbsp
+&nbsp&nbsp🤗 <a href="https://huggingface.co/collections/Qwen/qwen3-tts">Hugging Face</a>&nbsp&nbsp | &nbsp&nbsp🤖 <a href="https://modelscope.cn/collections/Qwen/Boiling-Snow-TTS">ModelScope</a>&nbsp&nbsp | &nbsp&nbsp📑 <a href="https://qwen.ai/blog?id=qwen3tts-0115">Blog</a>&nbsp&nbsp | &nbsp&nbsp📑 <a href="https://arxiv.org/abs/2601.15621">Paper</a>&nbsp&nbsp
 <br>
-🖥️ <a href="https://huggingface.co/spaces/Qwen/Qwen3-TTS">Hugging Face Demo</a>&nbsp&nbsp | &nbsp&nbsp 🖥️ <a href="https://modelscope.cn/studios/Qwen/Qwen3-TTS">ModelScope Demo</a>&nbsp&nbsp | &nbsp&nbsp💬 <a href="https://github.com/QwenLM/Qwen/blob/main/assets/wechat.png">WeChat (微信)</a>&nbsp&nbsp | &nbsp&nbsp🫨 <a href="https://discord.gg/CV4E9rpNSD">Discord</a>&nbsp&nbsp | &nbsp&nbsp📑 <a href="https://help.aliyun.com/zh/model-studio/qwen-tts-realtime">API</a>
+🖥️ <a href="https://huggingface.co/spaces/Qwen/Boiling-Snow-TTS">Hugging Face Demo</a>&nbsp&nbsp | &nbsp&nbsp 🖥️ <a href="https://modelscope.cn/studios/Qwen/Boiling-Snow-TTS">ModelScope Demo</a>&nbsp&nbsp | &nbsp&nbsp💬 <a href="https://github.com/QwenLM/Qwen/blob/main/assets/wechat.png">WeChat (微信)</a>&nbsp&nbsp | &nbsp&nbsp🫨 <a href="https://discord.gg/CV4E9rpNSD">Discord</a>&nbsp&nbsp | &nbsp&nbsp📑 <a href="https://help.aliyun.com/zh/model-studio/qwen-tts-realtime">API</a>
 
 </p>
 
-We release **Qwen3-TTS**, a series of powerful speech generation capabilities developed by Qwen, offering comprehensive support for voice clone, voice design, ultra-high-quality human-like speech generation, and natural language-based voice control. It provides developers and users with the most extensive set of speech generation features available.
+We release **Boiling-Snow-TTS**, a series of powerful speech generation capabilities developed by Qwen, offering comprehensive support for voice clone, voice design, ultra-high-quality human-like speech generation, and natural language-based voice control. It provides developers and users with the most extensive set of speech generation features available.
 
 
 ## News
-* 2026.1.22: 🎉🎉🎉 We have released [Qwen3-TTS](https://huggingface.co/collections/Qwen/qwen3-tts) series (0.6B/1.7B) based on Qwen3-TTS-Tokenizer-12Hz. Please check our [blog](https://qwen.ai/blog?id=qwen3tts-0115)!
+* 2026.1.22: 🎉🎉🎉 We have released [Boiling-Snow-TTS](https://huggingface.co/collections/Qwen/qwen3-tts) series (0.6B/1.7B) based on Boiling-Snow-TTS-Tokenizer-12Hz. Please check our [blog](https://qwen.ai/blog?id=qwen3tts-0115)!
 
 ## Contents <!-- omit in toc -->
 
@@ -44,12 +44,12 @@ We release **Qwen3-TTS**, a series of powerful speech generation capabilities de
 ### Introduction
 
 <p align="center">
-    <img src="https://qianwen-res.oss-cn-beijing.aliyuncs.com/Qwen3-TTS-Repo/qwen3_tts_introduction.png" width="90%"/>
+    <img src="https://qianwen-res.oss-cn-beijing.aliyuncs.com/Boiling-Snow-TTS-Repo/qwen3_tts_introduction.png" width="90%"/>
 <p>
 
-Qwen3-TTS covers 10 major languages (Chinese, English, Japanese, Korean, German, French, Russian, Portuguese, Spanish, and Italian) as well as multiple dialectal voice profiles to meet global application needs. In addition, the models feature strong contextual understanding, enabling adaptive control of tone, speaking rate, and emotional expression based on instructions and text semantics, and they show markedly improved robustness to noisy input text. Key features:
+Boiling-Snow-TTS covers 10 major languages (Chinese, English, Japanese, Korean, German, French, Russian, Portuguese, Spanish, and Italian) as well as multiple dialectal voice profiles to meet global application needs. In addition, the models feature strong contextual understanding, enabling adaptive control of tone, speaking rate, and emotional expression based on instructions and text semantics, and they show markedly improved robustness to noisy input text. Key features:
 
-* **Powerful Speech Representation**: Powered by the self-developed Qwen3-TTS-Tokenizer-12Hz, it achieves efficient acoustic compression and high-dimensional semantic modeling of speech signals. It fully preserves paralinguistic information and acoustic environmental features, enabling high-speed, high-fidelity speech reconstruction through a lightweight non-DiT architecture.
+* **Powerful Speech Representation**: Powered by the self-developed Boiling-Snow-TTS-Tokenizer-12Hz, it achieves efficient acoustic compression and high-dimensional semantic modeling of speech signals. It fully preserves paralinguistic information and acoustic environmental features, enabling high-speed, high-fidelity speech reconstruction through a lightweight non-DiT architecture.
 * **Universal End-to-End Architecture**: Utilizing a discrete multi-codebook LM architecture, it realizes full-information end-to-end speech modeling. This completely bypasses the information bottlenecks and cascading errors inherent in traditional LM+DiT schemes, significantly enhancing the model’s versatility, generation efficiency, and performance ceiling.
 * **Extreme Low-Latency Streaming Generation**: Based on the innovative Dual-Track hybrid streaming generation architecture, a single model supports both streaming and non-streaming generation. It can output the first audio packet immediately after a single character is input, with end-to-end synthesis latency as low as 97ms, meeting the rigorous demands of real-time interactive scenarios.
 * **Intelligent Text Understanding and Voice Control**: Supports speech generation driven by natural language instructions, allowing for flexible control over multi-dimensional acoustic attributes such as timbre, emotion, and prosody. By deeply integrating text semantic understanding, the model adaptively adjusts tone, rhythm, and emotional expression, achieving lifelike “what you imagine is what you hear” output.
@@ -58,46 +58,46 @@ Qwen3-TTS covers 10 major languages (Chinese, English, Japanese, Korean, German,
 ### Model Architecture
 
 <p align="center">
-    <img src="https://qianwen-res.oss-cn-beijing.aliyuncs.com/Qwen3-TTS-Repo/overview.png" width="80%"/>
+    <img src="https://qianwen-res.oss-cn-beijing.aliyuncs.com/Boiling-Snow-TTS-Repo/overview.png" width="80%"/>
 <p>
 
 ### Released Models Description and Download
 
-Below is an introduction and download information for the Qwen3-TTS models that have already been released. Other models mentioned in the technical report will be released in the near future. Please select and download the model that fits your needs.
+Below is an introduction and download information for the Boiling-Snow-TTS models that have already been released. Other models mentioned in the technical report will be released in the near future. Please select and download the model that fits your needs.
 
 | Tokenizer Name                      | Description |
 |---------------------------------|-------------|
-| Qwen3-TTS-Tokenizer-12Hz        | The Qwen3-TTS-Tokenizer-12Hz model which can encode the input speech into codes and decode them back into speech. |
+| Boiling-Snow-TTS-Tokenizer-12Hz        | The Boiling-Snow-TTS-Tokenizer-12Hz model which can encode the input speech into codes and decode them back into speech. |
 
 
 | Model | Features | Language Support | Streaming | Instruction Control |
 |---|---|---|---|---|
-| Qwen3-TTS-12Hz-1.7B-VoiceDesign | Performs voice design based on user-provided descriptions. | Chinese, English, Japanese, Korean, German, French, Russian, Portuguese, Spanish, Italian | ✅ | ✅ |
-| Qwen3-TTS-12Hz-1.7B-CustomVoice | Provides style control over target timbres via user instructions; supports 9 premium timbres covering various combinations of gender, age, language, and dialect. | Chinese, English, Japanese, Korean, German, French, Russian, Portuguese, Spanish, Italian | ✅ | ✅ |
-| Qwen3-TTS-12Hz-1.7B-Base | Base model capable of 3-second rapid voice clone from user audio input; can be used for fine-tuning (FT) other models. | Chinese, English, Japanese, Korean, German, French, Russian, Portuguese, Spanish, Italian | ✅ |  |
-| Qwen3-TTS-12Hz-0.6B-CustomVoice | Supports 9 premium timbres covering various combinations of gender, age, language, and dialect. | Chinese, English, Japanese, Korean, German, French, Russian, Portuguese, Spanish, Italian | ✅ |  |
-| Qwen3-TTS-12Hz-0.6B-Base | Base model capable of 3-second rapid voice clone from user audio input; can be used for fine-tuning (FT) other models. | Chinese, English, Japanese, Korean, German, French, Russian, Portuguese, Spanish, Italian | ✅ |  |
+| Boiling-Snow-TTS-12Hz-1.7B-VoiceDesign | Performs voice design based on user-provided descriptions. | Chinese, English, Japanese, Korean, German, French, Russian, Portuguese, Spanish, Italian | ✅ | ✅ |
+| Boiling-Snow-TTS-12Hz-1.7B-CustomVoice | Provides style control over target timbres via user instructions; supports 9 premium timbres covering various combinations of gender, age, language, and dialect. | Chinese, English, Japanese, Korean, German, French, Russian, Portuguese, Spanish, Italian | ✅ | ✅ |
+| Boiling-Snow-TTS-12Hz-1.7B-Base | Base model capable of 3-second rapid voice clone from user audio input; can be used for fine-tuning (FT) other models. | Chinese, English, Japanese, Korean, German, French, Russian, Portuguese, Spanish, Italian | ✅ |  |
+| Boiling-Snow-TTS-12Hz-0.6B-CustomVoice | Supports 9 premium timbres covering various combinations of gender, age, language, and dialect. | Chinese, English, Japanese, Korean, German, French, Russian, Portuguese, Spanish, Italian | ✅ |  |
+| Boiling-Snow-TTS-12Hz-0.6B-Base | Base model capable of 3-second rapid voice clone from user audio input; can be used for fine-tuning (FT) other models. | Chinese, English, Japanese, Korean, German, French, Russian, Portuguese, Spanish, Italian | ✅ |  |
 
 During model loading in the qwen-tts package or vLLM, model weights will be automatically downloaded based on the model name. However, if your runtime environment is not conducive to downloading weights during execution, you can refer to the following commands to manually download the model weights to a local directory:
 
 ```bash
 # Download through ModelScope (recommended for users in Mainland China)
 pip install -U modelscope
-modelscope download --model Qwen/Qwen3-TTS-Tokenizer-12Hz  --local_dir ./Qwen3-TTS-Tokenizer-12Hz 
-modelscope download --model Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice --local_dir ./Qwen3-TTS-12Hz-1.7B-CustomVoice
-modelscope download --model Qwen/Qwen3-TTS-12Hz-1.7B-VoiceDesign --local_dir ./Qwen3-TTS-12Hz-1.7B-VoiceDesign
-modelscope download --model Qwen/Qwen3-TTS-12Hz-1.7B-Base --local_dir ./Qwen3-TTS-12Hz-1.7B-Base
-modelscope download --model Qwen/Qwen3-TTS-12Hz-0.6B-CustomVoice --local_dir ./Qwen3-TTS-12Hz-0.6B-CustomVoice
-modelscope download --model Qwen/Qwen3-TTS-12Hz-0.6B-Base --local_dir ./Qwen3-TTS-12Hz-0.6B-Base
+modelscope download --model Qwen/Boiling-Snow-TTS-Tokenizer-12Hz  --local_dir ./Boiling-Snow-TTS-Tokenizer-12Hz 
+modelscope download --model Qwen/Boiling-Snow-TTS-12Hz-1.7B-CustomVoice --local_dir ./Boiling-Snow-TTS-12Hz-1.7B-CustomVoice
+modelscope download --model Qwen/Boiling-Snow-TTS-12Hz-1.7B-VoiceDesign --local_dir ./Boiling-Snow-TTS-12Hz-1.7B-VoiceDesign
+modelscope download --model Qwen/Boiling-Snow-TTS-12Hz-1.7B-Base --local_dir ./Boiling-Snow-TTS-12Hz-1.7B-Base
+modelscope download --model Qwen/Boiling-Snow-TTS-12Hz-0.6B-CustomVoice --local_dir ./Boiling-Snow-TTS-12Hz-0.6B-CustomVoice
+modelscope download --model Qwen/Boiling-Snow-TTS-12Hz-0.6B-Base --local_dir ./Boiling-Snow-TTS-12Hz-0.6B-Base
 
 # Download through Hugging Face
 pip install -U "huggingface_hub[cli]"
-huggingface-cli download Qwen/Qwen3-TTS-Tokenizer-12Hz --local-dir ./Qwen3-TTS-Tokenizer-12Hz
-huggingface-cli download Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice --local-dir ./Qwen3-TTS-12Hz-1.7B-CustomVoice
-huggingface-cli download Qwen/Qwen3-TTS-12Hz-1.7B-VoiceDesign --local-dir ./Qwen3-TTS-12Hz-1.7B-VoiceDesign
-huggingface-cli download Qwen/Qwen3-TTS-12Hz-1.7B-Base --local-dir ./Qwen3-TTS-12Hz-1.7B-Base
-huggingface-cli download Qwen/Qwen3-TTS-12Hz-0.6B-CustomVoice --local-dir ./Qwen3-TTS-12Hz-0.6B-CustomVoice
-huggingface-cli download Qwen/Qwen3-TTS-12Hz-0.6B-Base --local-dir ./Qwen3-TTS-12Hz-0.6B-Base
+huggingface-cli download Qwen/Boiling-Snow-TTS-Tokenizer-12Hz --local-dir ./Boiling-Snow-TTS-Tokenizer-12Hz
+huggingface-cli download Qwen/Boiling-Snow-TTS-12Hz-1.7B-CustomVoice --local-dir ./Boiling-Snow-TTS-12Hz-1.7B-CustomVoice
+huggingface-cli download Qwen/Boiling-Snow-TTS-12Hz-1.7B-VoiceDesign --local-dir ./Boiling-Snow-TTS-12Hz-1.7B-VoiceDesign
+huggingface-cli download Qwen/Boiling-Snow-TTS-12Hz-1.7B-Base --local-dir ./Boiling-Snow-TTS-12Hz-1.7B-Base
+huggingface-cli download Qwen/Boiling-Snow-TTS-12Hz-0.6B-CustomVoice --local-dir ./Boiling-Snow-TTS-12Hz-0.6B-CustomVoice
+huggingface-cli download Qwen/Boiling-Snow-TTS-12Hz-0.6B-Base --local-dir ./Boiling-Snow-TTS-12Hz-0.6B-Base
 ```
 
 
@@ -105,7 +105,7 @@ huggingface-cli download Qwen/Qwen3-TTS-12Hz-0.6B-Base --local-dir ./Qwen3-TTS-1
 
 ### Environment Setup
 
-The easiest way to quickly use Qwen3-TTS is to install the `qwen-tts` Python package from PyPI. This will pull in the required runtime dependencies and allow you to load any released Qwen3-TTS model. We recommend using a **fresh, isolated environment** to avoid dependency conflicts with existing packages. You can create a clean Python 3.12 environment like this:
+The easiest way to quickly use Boiling-Snow-TTS is to install the `qwen-tts` Python package from PyPI. This will pull in the required runtime dependencies and allow you to load any released Boiling-Snow-TTS model. We recommend using a **fresh, isolated environment** to avoid dependency conflicts with existing packages. You can create a clean Python 3.12 environment like this:
 
 ```bash
 conda create -n qwen3-tts python=3.12 -y
@@ -121,8 +121,8 @@ pip install -U qwen-tts
 If you want to develop or modify the code locally, install from source in editable mode.
 
 ```bash
-git clone https://github.com/QwenLM/Qwen3-TTS.git
-cd Qwen3-TTS
+git clone https://github.com/QwenLM/Boiling-Snow-TTS.git
+cd Boiling-Snow-TTS
 pip install -e .
 ```
 
@@ -147,7 +147,7 @@ After installation, you can import `Qwen3TTSModel` to run custom voice TTS, voic
 
 #### Custom Voice Generate
 
-For custom voice models (`Qwen3-TTS-12Hz-1.7B/0.6B-CustomVoice`), you just need to call `generate_custom_voice`, passing a single string or a batch list, along with `language`, `speaker`, and optional `instruct`. You can also call `model.get_supported_speakers()` and `model.get_supported_languages()` to see which speakers and languages the current model supports.
+For custom voice models (`Boiling-Snow-TTS-12Hz-1.7B/0.6B-CustomVoice`), you just need to call `generate_custom_voice`, passing a single string or a batch list, along with `language`, `speaker`, and optional `instruct`. You can also call `model.get_supported_speakers()` and `model.get_supported_languages()` to see which speakers and languages the current model supports.
 
 ```python
 import torch
@@ -155,7 +155,7 @@ import soundfile as sf
 from qwen_tts import Qwen3TTSModel
 
 model = Qwen3TTSModel.from_pretrained(
-    "Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice",
+    "Qwen/Boiling-Snow-TTS-12Hz-1.7B-CustomVoice",
     device_map="cuda:0",
     dtype=torch.bfloat16,
     attn_implementation="flash_attention_2",
@@ -184,7 +184,7 @@ sf.write("output_custom_voice_1.wav", wavs[0], sr)
 sf.write("output_custom_voice_2.wav", wavs[1], sr)
 ```
 
-For `Qwen3-TTS-12Hz-1.7B/0.6B-CustomVoice` models, the supported speaker list and speaker descriptions are provided below. We recommend using each speaker’s native language for the best quality. Of course, each speaker can speak any language supported by the model.
+For `Boiling-Snow-TTS-12Hz-1.7B/0.6B-CustomVoice` models, the supported speaker list and speaker descriptions are provided below. We recommend using each speaker’s native language for the best quality. Of course, each speaker can speak any language supported by the model.
 
 | Speaker | Voice Description  |  Native language |
 | --- | --- | --- |
@@ -200,7 +200,7 @@ For `Qwen3-TTS-12Hz-1.7B/0.6B-CustomVoice` models, the supported speaker list an
 
 #### Voice Design
 
-For the voice design model (`Qwen3-TTS-12Hz-1.7B-VoiceDesign`), you can use `generate_voice_design` to provide the target text and a natural-language `instruct` description.
+For the voice design model (`Boiling-Snow-TTS-12Hz-1.7B-VoiceDesign`), you can use `generate_voice_design` to provide the target text and a natural-language `instruct` description.
 
 ```python
 import torch
@@ -208,7 +208,7 @@ import soundfile as sf
 from qwen_tts import Qwen3TTSModel
 
 model = Qwen3TTSModel.from_pretrained(
-    "Qwen/Qwen3-TTS-12Hz-1.7B-VoiceDesign",
+    "Qwen/Boiling-Snow-TTS-12Hz-1.7B-VoiceDesign",
     device_map="cuda:0",
     dtype=torch.bfloat16,
     attn_implementation="flash_attention_2",
@@ -240,7 +240,7 @@ sf.write("output_voice_design_2.wav", wavs[1], sr)
 
 #### Voice Clone
 
-For the voice clone model (`Qwen3-TTS-12Hz-1.7B/0.6B-Base`), to clone a voice and synthesize new content, you just need to provide a reference audio clip (`ref_audio`) along with its transcript (`ref_text`). `ref_audio` can be a local file path, a URL, a base64 string, or a `(numpy_array, sample_rate)` tuple. If you set `x_vector_only_mode=True`, only the speaker embedding is used so `ref_text` is not required, but cloning quality may be reduced.
+For the voice clone model (`Boiling-Snow-TTS-12Hz-1.7B/0.6B-Base`), to clone a voice and synthesize new content, you just need to provide a reference audio clip (`ref_audio`) along with its transcript (`ref_text`). `ref_audio` can be a local file path, a URL, a base64 string, or a `(numpy_array, sample_rate)` tuple. If you set `x_vector_only_mode=True`, only the speaker embedding is used so `ref_text` is not required, but cloning quality may be reduced.
 
 ```python
 import torch
@@ -248,13 +248,13 @@ import soundfile as sf
 from qwen_tts import Qwen3TTSModel
 
 model = Qwen3TTSModel.from_pretrained(
-    "Qwen/Qwen3-TTS-12Hz-1.7B-Base",
+    "Qwen/Boiling-Snow-TTS-12Hz-1.7B-Base",
     device_map="cuda:0",
     dtype=torch.bfloat16,
     attn_implementation="flash_attention_2",
 )
 
-ref_audio = "https://qianwen-res.oss-cn-beijing.aliyuncs.com/Qwen3-TTS-Repo/clone.wav"
+ref_audio = "https://qianwen-res.oss-cn-beijing.aliyuncs.com/Boiling-Snow-TTS-Repo/clone.wav"
 ref_text  = "Okay. Yeah. I resent you. I love you. I respect you. But you know what? You blew it! And thanks to you."
 
 wavs, sr = model.generate_voice_clone(
@@ -283,7 +283,7 @@ sf.write("output_voice_clone_1.wav", wavs[0], sr)
 sf.write("output_voice_clone_2.wav", wavs[1], sr)
 ```
 
-For more examples of reusable voice clone prompts, batch cloning, and batch inference, please refer to the [example codes](https://github.com/QwenLM/Qwen3-TTS/blob/main/examples/test_model_12hz_base.py). With those examples and the `generate_voice_clone` function description, you can explore more advanced usage patterns.
+For more examples of reusable voice clone prompts, batch cloning, and batch inference, please refer to the [example codes](https://github.com/QwenLM/Boiling-Snow-TTS/blob/main/examples/test_model_12hz_base.py). With those examples and the `generate_voice_clone` function description, you can explore more advanced usage patterns.
 
 #### Voice Design then Clone
 
@@ -296,7 +296,7 @@ from qwen_tts import Qwen3TTSModel
 
 # create a reference audio in the target style using the VoiceDesign model
 design_model = Qwen3TTSModel.from_pretrained(
-    "Qwen/Qwen3-TTS-12Hz-1.7B-VoiceDesign",
+    "Qwen/Boiling-Snow-TTS-12Hz-1.7B-VoiceDesign",
     device_map="cuda:0",
     dtype=torch.bfloat16,
     attn_implementation="flash_attention_2",
@@ -313,7 +313,7 @@ sf.write("voice_design_reference.wav", ref_wavs[0], sr)
 
 # build a reusable clone prompt from the voice design reference
 clone_model = Qwen3TTSModel.from_pretrained(
-    "Qwen/Qwen3-TTS-12Hz-1.7B-Base",
+    "Qwen/Boiling-Snow-TTS-12Hz-1.7B-Base",
     device_map="cuda:0",
     dtype=torch.bfloat16,
     attn_implementation="flash_attention_2",
@@ -363,20 +363,20 @@ import soundfile as sf
 from qwen_tts import Qwen3TTSTokenizer
 
 tokenizer = Qwen3TTSTokenizer.from_pretrained(
-    "Qwen/Qwen3-TTS-Tokenizer-12Hz",
+    "Qwen/Boiling-Snow-TTS-Tokenizer-12Hz",
     device_map="cuda:0",
 )
 
-enc = tokenizer.encode("https://qianwen-res.oss-cn-beijing.aliyuncs.com/Qwen3-TTS-Repo/tokenizer_demo_1.wav")
+enc = tokenizer.encode("https://qianwen-res.oss-cn-beijing.aliyuncs.com/Boiling-Snow-TTS-Repo/tokenizer_demo_1.wav")
 wavs, sr = tokenizer.decode(enc)
 sf.write("decode_output.wav", wavs[0], sr)
 ```
 
-For more tokenizer examples (including different input formats and batch usage), please refer to the [example codes](https://github.com/QwenLM/Qwen3-TTS/blob/main/examples/test_tokenizer_12hz.py). With those examples and the description for `Qwen3TTSTokenizer`, you can explore more advanced usage patterns.
+For more tokenizer examples (including different input formats and batch usage), please refer to the [example codes](https://github.com/QwenLM/Boiling-Snow-TTS/blob/main/examples/test_tokenizer_12hz.py). With those examples and the description for `Qwen3TTSTokenizer`, you can explore more advanced usage patterns.
 
 ### Launch Local Web UI Demo
 
-To launch the Qwen3-TTS web ui demo, simply install the `qwen-tts` package and run `qwen-tts-demo`. Use the command below for help:
+To launch the Boiling-Snow-TTS web ui demo, simply install the `qwen-tts` package and run `qwen-tts-demo`. Use the command below for help:
 
 ```bash
 qwen-tts-demo --help
@@ -386,11 +386,11 @@ To launch the demo, you can use the following commands:
 
 ```bash
 # CustomVoice model
-qwen-tts-demo Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice --ip 0.0.0.0 --port 8000
+qwen-tts-demo Qwen/Boiling-Snow-TTS-12Hz-1.7B-CustomVoice --ip 0.0.0.0 --port 8000
 # VoiceDesign model
-qwen-tts-demo Qwen/Qwen3-TTS-12Hz-1.7B-VoiceDesign --ip 0.0.0.0 --port 8000
+qwen-tts-demo Qwen/Boiling-Snow-TTS-12Hz-1.7B-VoiceDesign --ip 0.0.0.0 --port 8000
 # Base model
-qwen-tts-demo Qwen/Qwen3-TTS-12Hz-1.7B-Base --ip 0.0.0.0 --port 8000
+qwen-tts-demo Qwen/Boiling-Snow-TTS-12Hz-1.7B-Base --ip 0.0.0.0 --port 8000
 ```
 
 And then open `http://<your-ip>:8000`, or access it via port forwarding in tools like VS Code.
@@ -409,7 +409,7 @@ openssl req -x509 -newkey rsa:2048 \
 Then run the demo with HTTPS:
 
 ```bash
-qwen-tts-demo Qwen/Qwen3-TTS-12Hz-1.7B-Base \
+qwen-tts-demo Qwen/Boiling-Snow-TTS-12Hz-1.7B-Base \
   --ip 0.0.0.0 --port 8000 \
   --ssl-certfile cert.pem \
   --ssl-keyfile key.pem \
@@ -420,21 +420,21 @@ And open `https://<your-ip>:8000` to experience it. If your browser shows a warn
 
 ### DashScope API Usage
 
-To further explore Qwen3-TTS, we encourage you to try our DashScope API for a faster and more efficient experience. For detailed API information and documentation, please refer to the following:
+To further explore Boiling-Snow-TTS, we encourage you to try our DashScope API for a faster and more efficient experience. For detailed API information and documentation, please refer to the following:
 
 | API Description | API Documentation (Mainland China) | API Documentation (International) |
 |------------------|-----------------------------------|------------------------------------|
-| Real-time API for Qwen3-TTS of custom voice model. | [https://help.aliyun.com/zh/model-studio/qwen-tts-realtime](https://help.aliyun.com/zh/model-studio/qwen-tts-realtime) | [https://www.alibabacloud.com/help/en/model-studio/qwen-tts-realtime](https://www.alibabacloud.com/help/en/model-studio/qwen-tts-realtime) |
-| Real-time API for Qwen3-TTS of voice clone model. | [https://help.aliyun.com/zh/model-studio/qwen-tts-voice-cloning](https://help.aliyun.com/zh/model-studio/qwen-tts-voice-cloning) | [https://www.alibabacloud.com/help/en/model-studio/qwen-tts-voice-cloning](https://www.alibabacloud.com/help/en/model-studio/qwen-tts-voice-cloning) |
-| Real-time API for Qwen3-TTS of voice design model. | [https://help.aliyun.com/zh/model-studio/qwen-tts-voice-design](https://help.aliyun.com/zh/model-studio/qwen-tts-voice-design) | [https://www.alibabacloud.com/help/en/model-studio/qwen-tts-voice-design](https://www.alibabacloud.com/help/en/model-studio/qwen-tts-voice-design) |
+| Real-time API for Boiling-Snow-TTS of custom voice model. | [https://help.aliyun.com/zh/model-studio/qwen-tts-realtime](https://help.aliyun.com/zh/model-studio/qwen-tts-realtime) | [https://www.alibabacloud.com/help/en/model-studio/qwen-tts-realtime](https://www.alibabacloud.com/help/en/model-studio/qwen-tts-realtime) |
+| Real-time API for Boiling-Snow-TTS of voice clone model. | [https://help.aliyun.com/zh/model-studio/qwen-tts-voice-cloning](https://help.aliyun.com/zh/model-studio/qwen-tts-voice-cloning) | [https://www.alibabacloud.com/help/en/model-studio/qwen-tts-voice-cloning](https://www.alibabacloud.com/help/en/model-studio/qwen-tts-voice-cloning) |
+| Real-time API for Boiling-Snow-TTS of voice design model. | [https://help.aliyun.com/zh/model-studio/qwen-tts-voice-design](https://help.aliyun.com/zh/model-studio/qwen-tts-voice-design) | [https://www.alibabacloud.com/help/en/model-studio/qwen-tts-voice-design](https://www.alibabacloud.com/help/en/model-studio/qwen-tts-voice-design) |
 
 
 ## vLLM Usage
 
-vLLM officially provides day-0 support for Qwen3-TTS! Welcome to use vLLM-Omni for Qwen3-TTS deployment and inference. For installation and more details, please check [vLLM-Omni official documentation](https://docs.vllm.ai/projects/vllm-omni/en/latest/getting_started/quickstart/#installation). Now only offline inference is supported. Online serving will be supported later, and vLLM-Omni will continue to offer support and optimization for Qwen3-TTS in areas such as inference speed and streaming capabilities.
+vLLM officially provides day-0 support for Boiling-Snow-TTS! Welcome to use vLLM-Omni for Boiling-Snow-TTS deployment and inference. For installation and more details, please check [vLLM-Omni official documentation](https://docs.vllm.ai/projects/vllm-omni/en/latest/getting_started/quickstart/#installation). Now only offline inference is supported. Online serving will be supported later, and vLLM-Omni will continue to offer support and optimization for Boiling-Snow-TTS in areas such as inference speed and streaming capabilities.
 
 ### Offline Inference
-You can use vLLM-Omni to inference Qwen3-TTS locally, we provide examples in [vLLM-Omni repo](https://github.com/vllm-project/vllm-omni/tree/main/examples/offline_inference/qwen3_tts) which can generate audio output:
+You can use vLLM-Omni to inference Boiling-Snow-TTS locally, we provide examples in [vLLM-Omni repo](https://github.com/vllm-project/vllm-omni/tree/main/examples/offline_inference/qwen3_tts) which can generate audio output:
 ```bash
 # git clone https://github.com/vllm-project/vllm-omni.git
 
@@ -458,7 +458,7 @@ python end2end.py --query-type Base --mode-tag icl
 
 ## Fine Tuning
 
-Please refer to [Qwen3-TTS-Finetuning](finetuning/) for detailed instructions on fine-tuning Qwen3-TTS.
+Please refer to [Boiling-Snow-TTS-Finetuning](finetuning/) for detailed instructions on fine-tuning Boiling-Snow-TTS.
 
 ## Evaluation
 
@@ -534,22 +534,22 @@ During evaluation, we ran inference for all models with `dtype=torch.bfloat16` a
       <td style="text-align: center;">1.65</td>
     </tr>
     <tr>
-      <td style="text-align: left;">Qwen3-TTS-25Hz-0.6B-Base</td>
+      <td style="text-align: left;">Boiling-Snow-TTS-25Hz-0.6B-Base</td>
       <td style="text-align: center;">1.18</td>
       <td style="text-align: center;">1.64</td>
     </tr>
     <tr>
-      <td style="text-align: left;">Qwen3-TTS-25Hz-1.7B-Base</td>
+      <td style="text-align: left;">Boiling-Snow-TTS-25Hz-1.7B-Base</td>
       <td style="text-align: center;">1.10</td>
       <td style="text-align: center;">1.49</td>
     </tr>
     <tr>
-      <td style="text-align: left;">Qwen3-TTS-12Hz-0.6B-Base</td>
+      <td style="text-align: left;">Boiling-Snow-TTS-12Hz-0.6B-Base</td>
       <td style="text-align: center;">0.92</td>
       <td style="text-align: center;">1.32</td>
     </tr>
     <tr>
-      <td style="text-align: left;">Qwen3-TTS-12Hz-1.7B-Base</td>
+      <td style="text-align: left;">Boiling-Snow-TTS-12Hz-1.7B-Base</td>
       <td style="text-align: center;">0.77</td>
       <td style="text-align: center;"><strong>1.24</strong></td>
     </tr>
@@ -564,8 +564,8 @@ During evaluation, we ran inference for all models with `dtype=torch.bfloat16` a
   <thead>
     <tr>
       <th rowspan="2" style="text-align: left; vertical-align: bottom;">Language</th>
-      <th colspan="2" style="text-align: center;">Qwen3-TTS-25Hz</th>
-      <th colspan="2" style="text-align: center;">Qwen3-TTS-12Hz</th>
+      <th colspan="2" style="text-align: center;">Boiling-Snow-TTS-25Hz</th>
+      <th colspan="2" style="text-align: center;">Boiling-Snow-TTS-12Hz</th>
       <th rowspan="2" style="text-align: center; vertical-align: bottom;">MiniMax</th>
       <th rowspan="2" style="text-align: center; vertical-align: bottom;">ElevenLabs</th>
     </tr>
@@ -774,8 +774,8 @@ During evaluation, we ran inference for all models with `dtype=torch.bfloat16` a
   <thead>
     <tr>
       <th style="text-align: left;">Task</th>
-      <th style="text-align: center;">Qwen3-TTS-25Hz-1.7B-Base</th>
-      <th style="text-align: center;">Qwen3-TTS-12Hz-1.7B-Base</th>
+      <th style="text-align: center;">Boiling-Snow-TTS-25Hz-1.7B-Base</th>
+      <th style="text-align: center;">Boiling-Snow-TTS-12Hz-1.7B-Base</th>
       <th style="text-align: center;">CosyVoice3</th>
       <th style="text-align: center;">CosyVoice2</th>
     </tr>
@@ -1029,8 +1029,8 @@ During evaluation, we ran inference for all models with `dtype=torch.bfloat16` a
   <thead>
     <tr>
       <th rowspan="2" style="text-align: left; vertical-align: bottom;">Language</th>
-      <th colspan="2" style="text-align: center;">Qwen3-TTS-25Hz</th>
-      <th colspan="2" style="text-align: center;">Qwen3-TTS-12Hz</th>
+      <th colspan="2" style="text-align: center;">Boiling-Snow-TTS-25Hz</th>
+      <th colspan="2" style="text-align: center;">Boiling-Snow-TTS-12Hz</th>
       <th rowspan="2" style="text-align: center; vertical-align: bottom;">GPT-4o-Audio<br>Preview</th>
     </tr>
     <tr>
@@ -1157,12 +1157,12 @@ During evaluation, we ran inference for all models with `dtype=torch.bfloat16` a
       <td style="text-align: center;">7.474</td>
     </tr>
     <tr>
-      <td style="text-align: left;">Qwen3-TTS-25Hz-1.7B-CustomVoice</td>
+      <td style="text-align: left;">Boiling-Snow-TTS-25Hz-1.7B-CustomVoice</td>
       <td style="text-align: center;"><strong>1.517</strong></td>
       <td style="text-align: center;"><strong>1.225</strong></td>
     </tr>
     <tr>
-      <td style="text-align: left;">Qwen3-TTS-12Hz-1.7B-CustomVoice</td>
+      <td style="text-align: left;">Boiling-Snow-TTS-12Hz-1.7B-CustomVoice</td>
       <td style="text-align: center;">2.356</td>
       <td style="text-align: center;">2.812</td>
     </tr>
@@ -1344,8 +1344,8 @@ During evaluation, we ran inference for all models with `dtype=torch.bfloat16` a
 If you find our paper and code useful in your research, please consider giving a star :star: and citation :pencil: :)
 
 ```BibTeX
-@article{Qwen3-TTS,
-  title={Qwen3-TTS Technical Report},
+@article{Boiling-Snow-TTS,
+  title={Boiling-Snow-TTS Technical Report},
   author={Hangrui Hu and Xinfa Zhu and Ting He and Dake Guo and Bin Zhang and Xiong Wang and Zhifang Guo and Ziyue Jiang and Hongkun Hao and Zishan Guo and Xinyu Zhang and Pei Zhang and Baosong Yang and Jin Xu and Jingren Zhou and Junyang Lin},
   journal={arXiv preprint arXiv:2601.15621},
   year={2026}
@@ -1355,7 +1355,7 @@ If you find our paper and code useful in your research, please consider giving a
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=QwenLM/Qwen3-TTS&type=Date)](https://star-history.com/#QwenLM/Qwen3-TTS&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=QwenLM/Boiling-Snow-TTS&type=Date)](https://star-history.com/#QwenLM/Boiling-Snow-TTS&Date)
 
 
 <br>
