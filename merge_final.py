@@ -3,8 +3,8 @@ from pydub import AudioSegment
 
 BASE_DIR = "/Users/webkubor/Desktop/create/Qwen3-TTS"
 REF_WAV = os.path.join(BASE_DIR, "assets/reference_audio/设计_水烟_极致软糯试音.wav")
-GEN_WAV = os.path.join(BASE_DIR, "assets/output_audio/生成的下半场.wav")
-FINAL_OUT = os.path.join(BASE_DIR, "assets/output_audio/场景_花楼破防版_终极合体.wav")
+GEN_WAV = os.path.join(BASE_DIR, "assets/output_audio/生成的下半场_重置版.wav")
+FINAL_OUT = os.path.join(BASE_DIR, "assets/output_audio/场景_花楼破防版_重置版合体.wav")
 
 def merge():
     print("开始缝合原声与新对话...")
