@@ -1,0 +1,75 @@
+{
+  "version": "1.0.0",
+  "description": "Qwen3-TTS 基础配置文件",
+  "paths": {
+    "output_directory": "./output",
+    "tts_model_directory": "./models/CustomVoice-0.6B/snapshots/85e237c12c027371202489a0ec509ded67b5e4b5",
+    "clone_model_directory": "./models/Base-0.6B",
+    "models_directory": "./models/CustomVoice-0.6B/snapshots/85e237c12c027371202489a0ec509ded67b5e4b5"
+  },
+  "defaults": {
+    "text": "欢迎使用 Qwen3-TTS，这是一个强大的语音合成引擎。",
+    "language": "Chinese",
+    "clone_voice": "jianghu_storyteller",
+    "speaker": "vivian",
+    "instruct": "用自然、平稳的语气说",
+    "sample_rate": 24000,
+    "audio_format": "wav"
+  },
+  "voice_profiles": {
+    "jianghu_storyteller": {
+      "target": "assets/reference_audio/江湖说书人_24k_8s.wav",
+      "ref_text": "三日熬战 南出石匠近折天门关外雪尽三豪 祈祷如雨",
+      "language": "Chinese",
+      "max_ref_seconds": 8,
+      "x_vector_only": false
+    }
+  },
+  "supported_speakers": {
+    "vivian": {
+      "name": "薇薇安 (vivian)",
+      "description": "女声：清晰自然、通用耐听（偏旁白/播报）",
+      "language": "中文/英文"
+    },
+    "serena": {
+      "name": "塞雷娜 (serena)",
+      "description": "女声：温柔亲和、偏成熟（适合陪伴/客服）",
+      "language": "中文/英文"
+    },
+    "sohee": {
+      "name": "苏熙 (sohee)",
+      "description": "女声：更年轻、更活泼（适合轻松对话）",
+      "language": "中文/英文"
+    },
+    "ono_anna": {
+      "name": "安娜 (ono_anna)",
+      "description": "女声：偏知性、稳重（适合朗读/解说）",
+      "language": "中文/英文"
+    },
+    "aiden": {
+      "name": "艾登 (aiden)",
+      "description": "男声：清亮干净（适合信息播报/教程）",
+      "language": "中文/英文"
+    },
+    "dylan": {
+      "name": "迪伦 (dylan)",
+      "description": "男声：沉稳自然（适合解说/旁白）",
+      "language": "中文"
+    },
+    "eric": {
+      "name": "艾瑞克 (eric)",
+      "description": "男声：更外放、更有个性（适合短视频/口播）",
+      "language": "中文"
+    },
+    "ryan": {
+      "name": "瑞恩 (ryan)",
+      "description": "男声：更有活力（适合轻快内容/活动）",
+      "language": "中文/英文"
+    },
+    "uncle_fu": {
+      "name": "付大叔 (uncle_fu)",
+      "description": "男声：更成熟、偏磁性（适合权威/商务）",
+      "language": "中文"
+    }
+  }
+}
