@@ -82,8 +82,14 @@ huggingface-cli download Qwen/Qwen3-TTS-12Hz-1.7B-Base --local-dir ./models/Base
 
 ## 🛠️ 快速开始 (Quick Start)
 
-### 1. 一键部署
-针对 Mac 用户提供全自动安装脚本，一行命令搞定环境、依赖与模型下载：
+### 1. 环境准备 (Prerequisites)
+- **操作系统**：推荐 macOS (M1/M2/M3) 或 Linux。
+- **系统依赖**：需安装 **FFmpeg**（用于音频解码与自动裁剪）。
+  - Mac: `brew install ffmpeg`
+  - Linux: `sudo apt install ffmpeg`
+
+### 2. 一键部署
+针对 Mac 用户提供全自动安装脚本：
 ```bash
 chmod +x install.sh && ./install.sh
 ```
