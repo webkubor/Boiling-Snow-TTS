@@ -23,3 +23,5 @@ wheels/
 venv/
 env/
 models/
+assets/output_audio/
+assets/temp/
