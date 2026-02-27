@@ -27,6 +27,7 @@ chmod +x install.sh && ./install.sh
 项目支持 **微电影** 与 **播客** 双线并行，分别对应两个独立的配置文件：
 - **微电影模式**：编辑 `configs/movie_config.json`（管理集数、角色、武侠情绪）。
 - **播客模式**：编辑 `configs/podcast_config.json`（默认锁定月栖洲音色与播客调音）。
+- **角色映射**：编辑 `configs/personas.json`（自定义中英文角色名映射，此文件不上传）。
 
 ### 第三步：一键收片
 在终端运行：
