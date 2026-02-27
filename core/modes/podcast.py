@@ -1,3 +1,4 @@
+import os
 import soundfile as sf
 from ..utils import generate_output_path, get_persona_cn
 
@@ -13,6 +14,7 @@ class PodcastMode:
         if "lines" in config and isinstance(config["lines"], list):
             print(f"🎙️ 进入【播客对谈模式】，专栏：{config.get('title')}")
             segments = []
+            seg_paths = []
             for i, line in enumerate(config["lines"]):
                 persona = line.get("persona", "yue_qizhou")
                 text = line.get("text")
@@ -21,17 +23,24 @@ class PodcastMode:
                 
                 wavs, sr = self.cloner.run(persona, text, config.get("language","Chinese"), instruct)
                 
-                # 导出分轨
                 temp_path = generate_output_path(config, self.engine.base_dir, suffix=f"_seg{i+1}")
                 sf.write(temp_path, wavs[0], sr)
+                seg_paths.append(temp_path)
                 
-                # 【修正】调用最新的统一调音接口
                 seg = self.processor.apply_post_tuning(temp_path)
                 if seg: segments.append(seg)
             
-            # 场景缝合
             final_path = generate_output_path(config, self.engine.base_dir)
             self.processor.merge_scene(segments, final_path, gap_ms=1000)
+            
+            # --- 【新增】清理播客分段临时文件 ---
+            for path in seg_paths:
+                try:
+                    if os.path.exists(path):
+                        os.remove(path)
+                except: pass
+            print(f"🧹 已清理 {len(seg_paths)} 个对谈分段临时文件。")
+            
             return None, 0, final_path
         
         # 2. 单人模式逻辑
