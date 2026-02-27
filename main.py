@@ -3,7 +3,7 @@ import sys
 import soundfile as sf
 from core.engine import TTSBaseEngine
 from core.processor import AudioProcessor
-from core.utils import load_config, generate_output_path, get_persona_cn, log_generation_metadata
+from core.utils import load_config, generate_output_path, get_persona_cn, log_generation_metadata, post_process_audio
 from core.modes.cloner import CloneMode
 from core.modes.designer import DesignMode
 from core.modes.dialogue import DialogueMode
@@ -35,23 +35,23 @@ def main():
     content_type = cfg.get("content_type", "movie")
     is_dial = "lines" in cfg and isinstance(cfg["lines"], list)
     
-    if is_dial:
-        # 对话模式
+    if content_type == "podcast":
+        # 播客模式 (支持独白和对谈)
+        wavs, sr, final_path = podcast.run(cfg)
+        if wavs: # 独白模式
+            final_path = generate_output_path(cfg, BASE_DIR)
+            sf.write(final_path, wavs[0], sr)
+            processor.apply_post_tuning(final_path, mode="podcast")
+        # 对谈模式下，PodcastMode 已处理完 final_path
+    elif is_dial:
+        # 微电影对话模式
         final_path = dialogue.run(cfg)
-    elif content_type == "podcast":
-        # 播客模式
-        wavs, sr = podcast.run(cfg)
-        final_path = generate_output_path(cfg, BASE_DIR)
-        sf.write(final_path, wavs[0], sr)
-        processor.apply_post_tuning(final_path, mode="podcast")
     elif mode_type == "VoiceDesign":
         # 设计模式
         instruct = f"{cfg.get('tone','')}, {cfg.get('emotion','')}".strip(", ")
         wavs, sr = designer.run(cfg["text"], cfg.get("language","Chinese"), instruct)
         final_path = generate_output_path(cfg, BASE_DIR)
         sf.write(final_path, wavs[0], sr)
-        
-        # 设计入库逻辑
         ref_name = f"{get_persona_cn(cfg.get('persona'))}_参考.wav"
         sf.write(os.path.join(BASE_DIR, "assets/reference_audio", ref_name), wavs[0], sr)
         processor.apply_post_tuning(final_path, mode="movie")

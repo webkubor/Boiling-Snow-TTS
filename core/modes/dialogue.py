@@ -15,8 +15,7 @@ class DialogueMode:
             persona = line.get("persona")
             text = line.get("text")
             instruct = f"{line.get('tone','')}，{line.get('emotion','')}".strip("，")
-            print(f"
-🎬 正在生成第 {i+1} 句 ({get_persona_cn(persona)})")
+            print(f"\n🎬 正在生成第 {i+1} 句 ({get_persona_cn(persona)})")
             
             # 复用克隆模块逻辑
             wavs, sr = self.cloner.run(persona, text, config.get("language","Chinese"), instruct)
@@ -31,4 +30,3 @@ class DialogueMode:
         final_path = generate_output_path(config, self.engine.base_dir)
         self.processor.merge_scene(segments, final_path)
         return final_path
-        

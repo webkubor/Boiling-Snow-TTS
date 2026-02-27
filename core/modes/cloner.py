@@ -21,8 +21,8 @@ class CloneMode:
             if ref_audio: break
         
         if not ref_audio:
-            print(f"
-❌ 错误：找不到角色【{p_cn}】的参考音频！"); sys.exit(1)
+            print(f"\n❌ 错误：找不到角色【{p_cn}】的参考音频！\n💡 请将原始音频放入 assets/reference_audio/ 目录下并命名为 [{p_cn}_参考.wav]")
+            sys.exit(1)
             
         # 1. 独立调用样音提取
         seed = self.processor.extract_voice_seed(ref_audio, p_cn)

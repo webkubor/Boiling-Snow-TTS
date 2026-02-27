@@ -20,7 +20,8 @@ PERSONA_MAP = {
     "yan_zhaoling": "燕照绫",
     "ning_guanchen": "宁观尘",
     "me": "老爹",
-    "yue_qizhou": "月栖洲"
+    "yue_qizhou": "月栖洲",
+    "xiao_mo": "小墨"
 }
 
 def get_persona_cn(persona_en):

@@ -1,11 +1,12 @@
 {
   "content_type": "podcast",
-  "model_type": "Base",
+  "model_type": "VoiceDesign",
   "model_size": "1.7B",
-  "persona": "yue_qizhou",
-  "title": "江湖拾音录·新篇",
-  "text": "在这里，不谈虚妄的怀念，只做最踏实的打捞。",
-  "emotion": "深情、知性、仪式感",
-  "tone": "专业电台播音，声音贴耳清晰，富有故事感",
-  "language": "Chinese"
+  "persona": "xiao_mo",
+  "title": "小墨V2试音",
+  "text": "月老师！月老师快看！我这回在档案室翻出来的宝贝，是不是超厉害的？这可是我找了好几个晚上才捞上来的‘大鱼’，你可得好好夸夸我哦！",
+  "emotion": "娇憨、元气、极其清甜",
+  "tone": "十八岁元气少女音，清脆灵动，现代甜美风，语气带点撒娇感",
+  "language": "Chinese",
+  "output_filename": "设计_小墨_V2元气试音.wav"
 }
