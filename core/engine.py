@@ -19,19 +19,26 @@ class TTSBaseEngine:
         print(f"🚀 正在加载 [{model_type}-{model_size}] 引擎到 {self.device.upper()}...")
         
         try:
-            self.model = Qwen3TTSModel.from_pretrained(
+            # 加载包装模型
+            self.wrapped_model = Qwen3TTSModel.from_pretrained(
                 self.model_path,
                 device_map=self.device,
                 dtype=self.dtype,
                 attn_implementation="sdpa"
             )
+            # 提取核心组件方便后续直接调用底层 generate
+            self.model = self.wrapped_model.model
+            self.processor = self.wrapped_model.processor
+            
         except Exception as e:
             print(f"⚠️ 硬件加速启动失败，回退到 CPU... ({e})")
-            self.model = Qwen3TTSModel.from_pretrained(
+            self.wrapped_model = Qwen3TTSModel.from_pretrained(
                 self.model_path, 
                 device_map="cpu", 
                 dtype=torch.float32
             )
+            self.model = self.wrapped_model.model
+            self.processor = self.wrapped_model.processor
 
     def _detect_device(self):
         device = "mps" if torch.backends.mps.is_available() else "cpu"
