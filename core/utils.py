@@ -51,22 +51,40 @@ def generate_output_path(config, base_dir):
     return os.path.join(out_dir, re.sub(r'[\/:*?"<>|]', '_', filename))
 
 def post_process_audio(input_path, content_type="movie"):
-    """【新增】播客级后期处理：增加首尾留白、音量标准化、清晰度增强"""
-    print(f"🪄 正在执行后期调音 (模式: {content_type})...")
+    """【高级优化】后期调音：使用更鲁棒的去噪与留白逻辑"""
+    print(f"🪄 正在执行高级调音 (模式: {content_type})...")
     try:
         audio = AudioSegment.from_file(input_path)
         
-        # 1. 声音标准化（让声音更“贴耳”、更清晰）
+        # 1. 声音标准化（平衡响度）
         audio = audio.normalize(headroom=0.1)
         
-        if content_type == "podcast":
-            # 2. 播客专属：首留白 1.5s，尾留白 1s
-            silence_start = AudioSegment.silent(duration=1500)
-            silence_end = AudioSegment.silent(duration=1000)
-            audio = silence_start + audio + silence_end
-            print("⏳ 已加入 1.5s 开场留白...")
-            
-        audio.export(input_path, format="wav")
+        # 2. 简单的首尾静音切除（Trim）
+        # 寻找音频中第一个非静音的位置
+        start_trim = audio.get_array_of_samples()
+        # 这里我们手动实现一个简单的切除，比 strip_silence 更稳
+        def detect_leading_silence(sound, silence_threshold=-50.0, chunk_size=10):
+            iterate = 0
+            while sound[iterate:iterate+chunk_size].dBFS < silence_threshold and iterate < len(sound):
+                iterate += chunk_size
+            return iterate
+
+        start_idx = detect_leading_silence(audio)
+        end_idx = detect_leading_silence(audio.reverse())
+        
+        # 执行切除
+        audio = audio[start_idx : (len(audio) - end_idx)]
+        
+        # 3. 强制留白：首 1.5s，尾 1s
+        silence_start = AudioSegment.silent(duration=1500)
+        silence_end = AudioSegment.silent(duration=1000)
+        
+        # 4. 平滑淡入淡出 (50ms)
+        audio = audio.fade_in(50).fade_out(50)
+        
+        combined = silence_start + audio + silence_end
+        combined.export(input_path, format="wav")
+        print("✅ 已成功执行首尾 Trim 并加入 1.5s 开场静音。")
         return True
     except Exception as e:
         print(f"⚠️ 后期调音失败: {e}")

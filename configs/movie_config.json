@@ -1,11 +1,11 @@
 {
   "model_type": "Base",
   "model_size": "1.7B",
-  "persona": "narrator",
-  "episode": "01",
-  "title": "江湖序章",
-  "text": "雪落江湖，热血难凉。这一笔风月，你可敢接？",
-  "emotion": "深沉、肃杀、带有浓厚的江湖感",
-  "tone": "低沉有力",
+  "persona": "ning_guanchen",
+  "episode": "Character",
+  "title": "宁观尘MP3版本试音",
+  "text": "酒是半截的真，话是陈年的好。我是宁观尘，一介游方道士。这世间的万物皆有回响，而我，只听那一抹失传的惊鸿。慕姑娘，跟紧了，别掉进贫道的阵里。",
+  "emotion": "洒脱、随性、仙风道骨",
+  "tone": "磁性男声，语调轻盈，略带酒后的慵懒感",
   "language": "Chinese"
 }
