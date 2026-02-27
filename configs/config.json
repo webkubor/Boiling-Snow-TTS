@@ -1,12 +1,11 @@
 {
-  "model_type": "VoiceDesign",
+  "content_type": "podcast",
+  "model_type": "Base",
   "model_size": "1.7B",
-  "persona": "ning_guanchen",
-  "episode": "Character",
-  "title": "游侠宁观尘试音",
-  "text": "酒是陈的好，话是半截的真。这江湖啊，就像我这葫芦里的酒，一口下去，是辣是甜，只有自己知道。慕姑娘，别盯着我看，小心陷进我这道士的阵里去。",
-  "emotion": "随性、慵懒、带点微醺的笑意",
-  "tone": "二十八岁成熟男声，磁性轻微烟嗓，慵懒而睿智，语调轻快但不轻浮",
-  "language": "Chinese",
-  "output_filename": "设计_宁观尘_试音.wav"
+  "persona": "yue_qizhou",
+  "title": "标准参考音验证",
+  "text": "各位网易云音乐的朋友们，大家好。我是月栖洲。现在我正使用经过 1.7B 模型和后期调优后的标准音色作为参考。这种贴耳、清晰且富有张力的声音，将成为我们《江湖拾音录》的灵魂。",
+  "emotion": "沉稳、知性、贴耳",
+  "tone": "标准播音腔，声音清晰饱满",
+  "language": "Chinese"
 }

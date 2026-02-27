@@ -41,8 +41,10 @@ class VoiceCloner(TTSBaseEngine):
         possible_paths = [
             os.path.join(self.ref_dir, f"{persona_cn}_参考.wav"),
             os.path.join(self.ref_dir, f"{persona_cn}_参考.mp3"),
+            os.path.join(self.ref_dir, f"{persona_cn}_参考.m4a"),
             os.path.join(self.ref_dir, f"{persona}_ref.wav"),
             os.path.join(self.ref_dir, f"{persona}_ref.mp3"),
+            os.path.join(self.ref_dir, f"{persona}_ref.m4a"),
         ]
         
         ref_audio = None
@@ -57,9 +59,9 @@ class VoiceCloner(TTSBaseEngine):
             print(f"❌ 错误：找不到角色【{persona_cn}】的参考音频底稿！")
             print("="*60)
             print(f"💡 解决方法：")
-            print(f"1. 请准备一段该角色的原始录音（任意时长，AI会自动剪辑）。")
+            print(f"1. 请准备一段该角色的原始录音（支持 wav, mp3, m4a）。")
             print(f"2. 将音频文件放入目录：assets/reference_audio/")
-            print(f"3. 命名文件为：{persona_cn}_参考.wav (或 .mp3)")
+            print(f"3. 命名文件为：{persona_cn}_参考.wav (或 .mp3 / .m4a)")
             print("="*60 + "\n")
             sys.exit(1) # 强行中断任务，等待用户补齐素材
         

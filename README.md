@@ -27,7 +27,7 @@ chmod +x install.sh && ./install.sh
 找到项目里的 `configs/config.json`，把你想说的话填进去。
 
 **💡 声音克隆技巧 (Voice Cloning)：**
-如果你想复刻某个声音，只需将该角色的 **任意长度原始录音** 放入目录：`assets/reference_audio/`，并命名为 `{角色名}_ref.mp3`。
+如果你想复刻某个声音，只需将该角色的 **任意长度原始录音**（支持 `wav`, `mp3`, `m4a`）放入目录：`assets/reference_audio/`，并命名为 `{角色名}_参考.wav` (或 `.mp3`, `.m4a`)。
 **无需手动剪辑**，项目内置的 AI 模块会自动为您截取最佳的 10 秒片段进行克隆。
 然后在 `config.json` 中把 `persona` 设置为该 `角色名`，并将 `model_type` 设为 `Base` 即可。
 
@@ -58,7 +58,7 @@ python main.py
 
 | 模式 | 技术原理 | 操作流程 |
 | :--- | :--- | :--- |
-| **声音克隆 (Base)** | 零样本 (Zero-shot) 复刻 | 放入 `{角色名}_ref.mp3` 到参考目录，AI 自动学习 |
+| **声音克隆 (Base)** | 零样本 (Zero-shot) 复刻 | 放入 `{角色名}_参考.wav/mp3/m4a` 到参考目录，AI 自动学习 |
 | **音色设计 (VoiceDesign)** | 指令驱动捏人 | 填写 `emotion` & `tone` 描述，AI 凭空创造声音 |
 | **官方精品 (CustomVoice)** | 预设高质量算子 | 在配置中指定 `speaker` 名字，快速出片 |
 
