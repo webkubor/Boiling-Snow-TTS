@@ -1,6 +1,10 @@
 # 🏔️ Boiling-Snow-TTS
 > **工业级武侠语音合成引擎 | 专为 Apple Silicon 深度优化 | 基于 Qwen3-TTS**
 
+<p align="center">
+  <img src="assets/cover.jpg" width="100%" alt="Boiling-Snow-TTS Cover"/>
+</p>
+
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.9%2B-green.svg)](pyproject.toml)
 [![Platform](https://img.shields.io/badge/Platform-macOS%20(M1/M2/M3)-black.svg)](#-硬件加速优化-hardware-acceleration)
