@@ -1,12 +1,12 @@
 {
   "model_type": "VoiceDesign",
   "model_size": "1.7B",
-  "persona": "lu_tingchao",
-  "episode": "Top8",
-  "title": "天榜第八陆听潮试音",
-  "text": "嘘……你听到了吗？这是雨滴被切碎的声音，也是你骨头共振的频率。残响一旦开启，我也……停不下来呢。",
-  "emotion": "病态优雅、神经质、冷静而疯狂",
-  "tone": "二十八岁左右男性，声音轻柔且有磁性，带着不稳定的颤动感，语速忽快忽慢，富有艺术家的偏执感",
+  "persona": "ning_guanchen",
+  "episode": "Character",
+  "title": "游侠宁观尘试音",
+  "text": "酒是陈的好，话是半截的真。这江湖啊，就像我这葫芦里的酒，一口下去，是辣是甜，只有自己知道。慕姑娘，别盯着我看，小心陷进我这道士的阵里去。",
+  "emotion": "随性、慵懒、带点微醺的笑意",
+  "tone": "二十八岁成熟男声，磁性轻微烟嗓，慵懒而睿智，语调轻快但不轻浮",
   "language": "Chinese",
-  "output_filename": "设计_天榜08_陆听潮_试音.wav"
+  "output_filename": "设计_宁观尘_试音.wav"
 }

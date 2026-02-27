@@ -1,4 +1,5 @@
 import os
+import sys
 from pydub import AudioSegment
 from .engine import TTSBaseEngine
 from .utils import get_persona_cn
@@ -16,7 +17,6 @@ class VoiceCloner(TTSBaseEngine):
         os.makedirs(self.temp_dir, exist_ok=True)
         
         persona_cn = get_persona_cn(persona)
-        # 统一命名格式：当前参考_角色名.mp3
         temp_name = f"当前参考_{persona_cn}.mp3"
         temp_path = os.path.join(self.temp_dir, temp_name)
         
@@ -28,7 +28,6 @@ class VoiceCloner(TTSBaseEngine):
                 print(f"✂️ AI 自动剪辑：参考音频过长 ({duration_sec:.1f}s)，正在截取前 {max_sec}s...")
                 audio = audio[:max_sec * 1000]
             
-            # 导出到 temp 目录
             audio.export(temp_path, format="mp3")
             return temp_path
         except Exception as e:
@@ -38,8 +37,7 @@ class VoiceCloner(TTSBaseEngine):
     def process(self, text, persona, language, instruct):
         persona_cn = get_persona_cn(persona)
         
-        # 寻找参考音频，优先找中文名的参考文件
-        # 支持 {角色名}_参考.wav, {角色名}_参考.mp3, {persona}_ref.mp3 等格式
+        # 寻找参考音频
         possible_paths = [
             os.path.join(self.ref_dir, f"{persona_cn}_参考.wav"),
             os.path.join(self.ref_dir, f"{persona_cn}_参考.mp3"),
@@ -53,14 +51,18 @@ class VoiceCloner(TTSBaseEngine):
                 ref_audio = path
                 break
         
+        # 【核心引导：如果参考音频不存在，中断并引导用户】
         if not ref_audio:
-            print(f"⚠️ 参考音色 [{persona_cn}] 不存在，回退至说书人")
-            ref_audio = os.path.join(self.ref_dir, "旁白_参考.wav")
-            # 兜底兜底
-            if not os.path.exists(ref_audio):
-                ref_audio = os.path.join(self.ref_dir, "narrator_ref.mp3")
+            print("\n" + "="*60)
+            print(f"❌ 错误：找不到角色【{persona_cn}】的参考音频底稿！")
+            print("="*60)
+            print(f"💡 解决方法：")
+            print(f"1. 请准备一段该角色的原始录音（任意时长，AI会自动剪辑）。")
+            print(f"2. 将音频文件放入目录：assets/reference_audio/")
+            print(f"3. 命名文件为：{persona_cn}_参考.wav (或 .mp3)")
+            print("="*60 + "\n")
+            sys.exit(1) # 强行中断任务，等待用户补齐素材
         
-        # 无论如何，最终交给 model 的路径一定是来自 temp 且具备中文名
         processed_ref = self._prepare_reference(ref_audio, persona)
         print(f"👥 模式：声音克隆 | 物理参考源 (temp)：{os.path.basename(processed_ref)}")
         
