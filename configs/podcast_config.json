@@ -1,0 +1,11 @@
+{
+  "content_type": "podcast",
+  "model_type": "Base",
+  "model_size": "1.7B",
+  "persona": "yue_qizhou",
+  "title": "江湖拾音录·新篇",
+  "text": "在这里，不谈虚妄的怀念，只做最踏实的打捞。",
+  "emotion": "深情、知性、仪式感",
+  "tone": "专业电台播音，声音贴耳清晰，富有故事感",
+  "language": "Chinese"
+}

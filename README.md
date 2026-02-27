@@ -24,20 +24,24 @@ chmod +x install.sh && ./install.sh
 ```
 
 ### 第二步：像写剧本一样改配置
-找到项目里的 `configs/config.json`，把你想说的话填进去。
-
-**💡 声音克隆技巧 (Voice Cloning)：**
-如果你想复刻某个声音，只需将该角色的 **任意长度原始录音**（支持 `wav`, `mp3`, `m4a`）放入目录：`assets/reference_audio/`，并命名为 `{角色名}_参考.wav` (或 `.mp3`, `.m4a`)。
-**无需手动剪辑**，项目内置的 AI 模块会自动为您截取最佳的 10 秒片段进行克隆。
-然后在 `config.json` 中把 `persona` 设置为该 `角色名`，并将 `model_type` 设为 `Base` 即可。
+项目支持 **微电影** 与 **播客** 双线并行，分别对应两个独立的配置文件：
+- **微电影模式**：编辑 `configs/movie_config.json`（管理集数、角色、武侠情绪）。
+- **播客模式**：编辑 `configs/podcast_config.json`（默认锁定月栖洲音色与播客调音）。
 
 ### 第三步：一键收片
 在终端运行：
 ```bash
 source .venv/bin/activate
+# 默认生成微电影配音
 python main.py
+# 指定生成播客音频
+python main.py podcast
 ```
 **恭喜！** 你的配音成品已经躺在 `assets/output_audio/` 目录里🎉。
+
+**💡 声音克隆技巧 (Voice Cloning)：**
+如果你想复刻某个新角色，只需将该角色的 **任意长度原始录音**（支持 `wav`, `mp3`, `m4a`）放入 `assets/reference_audio/`，命名为 `{角色名}_参考.wav`。
+AI 会自动为您裁剪最佳片段。然后在对应的 JSON 配置中填入该 `角色名` 并设置 `model_type` 为 `Base` 即可。
 
 ---
 
