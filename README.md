@@ -48,6 +48,38 @@
 
 ---
 
+## 📥 模型下载 (Model Downloads)
+
+由于模型权重文件较大，本项目未将其包含在 Git 仓库中。请根据需要下载以下模型并放置在 `models/` 目录下相应的文件夹中：
+
+### 1. 模型列表 (Model List)
+
+| 模型名称 | 对应目录 | 用途 |
+| :--- | :--- | :--- |
+| [Qwen3-TTS-12Hz-1.7B-Base](https://modelscope.cn/models/Qwen/Qwen3-TTS-12Hz-1.7B-Base) | `models/Base-1.7B` | **推荐**。高质量克隆底模 |
+| [Qwen3-TTS-12Hz-0.6B-Base](https://modelscope.cn/models/Qwen/Qwen3-TTS-12Hz-0.6B-Base) | `models/Base-0.6B` | 极速预览克隆底模 |
+| [Qwen3-TTS-12Hz-1.7B-VoiceDesign](https://modelscope.cn/models/Qwen/Qwen3-TTS-12Hz-1.7B-VoiceDesign) | `models/VoiceDesign-1.7B` | 音色设计（凭空捏人） |
+| [Qwen3-TTS-12Hz-1.7B-CustomVoice](https://modelscope.cn/models/Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice) | `models/CustomVoice-1.7B` | 官方预设全量引擎 |
+
+### 2. 下载方式 (Download Methods)
+
+#### 方法 A：使用 ModelScope (推荐国内用户)
+```bash
+pip install modelscope
+# 下载 Base-1.7B 成品模型
+modelscope download --model Qwen/Qwen3-TTS-12Hz-1.7B-Base --local_dir ./models/Base-1.7B
+# 下载 VoiceDesign 模型
+modelscope download --model Qwen/Qwen3-TTS-12Hz-1.7B-VoiceDesign --local_dir ./models/VoiceDesign-1.7B
+```
+
+#### 方法 B：使用 HuggingFace (推荐海外用户)
+```bash
+pip install -U "huggingface_hub[cli]"
+huggingface-cli download Qwen/Qwen3-TTS-12Hz-1.7B-Base --local-dir ./models/Base-1.7B
+```
+
+---
+
 ## 🛠️ 快速开始 (Quick Start)
 
 ### 1. 一键部署

@@ -45,6 +45,23 @@ The `models/` directory houses different tiers of engines:
 
 ---
 
+## 📥 Model Downloads
+
+Model weights are not included in this repository. Please download them using the following links or commands:
+
+| Model Name | Local Directory | Use Case |
+| :--- | :--- | :--- |
+| [Qwen3-TTS-12Hz-1.7B-Base](https://huggingface.co/Qwen/Qwen3-TTS-12Hz-1.7B-Base) | `models/Base-1.7B` | **Recommended**. High-quality cloning. |
+| [Qwen3-TTS-12Hz-1.7B-VoiceDesign](https://huggingface.co/Qwen/Qwen3-TTS-12Hz-1.7B-VoiceDesign) | `models/VoiceDesign-1.7B` | For creating new voices via text prompts. |
+
+### Download via HuggingFace
+```bash
+pip install -U "huggingface_hub[cli]"
+huggingface-cli download Qwen/Qwen3-TTS-12Hz-1.7B-Base --local-dir ./models/Base-1.7B
+```
+
+---
+
 ## 🚀 Quick Start
 
 ### 1. One-Click Installation
