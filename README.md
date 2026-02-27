@@ -16,6 +16,15 @@
 3. **流程繁琐**：通过 **JSON 驱动模式**，实现了文案与代码的彻底解耦。创作者只需改 JSON，AI 自动生成带中文标题的成品。
 4. **性能优化**：针对 **Apple M3 Pro (MPS)** 进行了原生硬件加速，让 1.7B 大模型在 Mac 上也能秒级出片。
 
+## 🚀 硬件加速优化 (Hardware Acceleration)
+
+本项目核心脚本 `boiling_snow_clone.py` 已针对 **Apple Silicon (M1/M2/M3)** 芯片进行深度原生优化，确保极速生成体验：
+
+- **MPS (Metal Performance Shaders) 加速**：自动探测并启用 Mac GPU 进行矩阵运算，速度远超纯 CPU 模式。
+- **SDPA (Scaled Dot Product Attention)**：强制启用原生注意力机制加速，绕过 NVIDIA 专用的 flash-attn 限制，在 Mac 上达到同等加速效果。
+- **bfloat16 精度优化**：在 M 芯片上使用 `bfloat16` 数据类型，在大幅降低内存占用的同时，保持了 1.7B 大模型的高音质输出。
+- **自动降级保护**：脚本内置环境自检，若 MPS 启动失败将无缝回退至 CPU 模式，确保任务 100% 成功。
+
 ---
 
 ## 🤖 模型库详细讲解 (Models Gallery)
