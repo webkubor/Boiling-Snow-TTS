@@ -17,6 +17,9 @@ from core.modes.dialogue import DialogueMode
 
 def main():
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    agent_project = os.path.join(BASE_DIR, ".agent", "PROJECT.md")
+    if not os.path.exists(agent_project):
+        print("⚠️ [AI 初始化提醒] 未检测到 .agent/PROJECT.md。请先执行 AI 初始化（.agent + README 导航）。")
 
     config_arg = sys.argv[1].lower() if len(sys.argv) > 1 else "single"
     try:

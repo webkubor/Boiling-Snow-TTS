@@ -1,3 +1,8 @@
+# AI Context
+
+> **🤖 AI Agents 导航**: 本项目遵循 Standard Workflow。
+> 请优先阅读 [.agent/PROJECT.md](.agent/PROJECT.md) 获取上下文与任务索引。
+
 # 🏔️ Boiling-Snow-TTS
 > **工业级武侠语音合成引擎 | 专为 Apple Silicon 深度优化 | 基于 Qwen3-TTS**
 
@@ -21,6 +26,15 @@
 打开终端，粘贴运行以下命令（自动装环境、下模型）：
 ```bash
 chmod +x install.sh && ./install.sh
+```
+
+### AI 初始化门禁 (必开)
+```bash
+# 校验 .agent 必备结构与 README 头部导航
+npm run ai:check
+
+# 一次性安装 pre-commit 门禁（推荐）
+npm run hooks:install
 ```
 
 ### 第二步：像写剧本一样改配置
