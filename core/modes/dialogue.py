@@ -15,7 +15,7 @@ class DialogueMode:
         segments = []
         line_paths = []
         for i, line in enumerate(config["lines"]):
-            persona = line.get("persona")
+            persona = line.get("persona") or line.get("role")
             text = line.get("text")
             
             raw_instruct = f"{line.get('tone','')}，{line.get('emotion','')}".strip("，")

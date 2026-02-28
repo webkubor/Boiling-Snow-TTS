@@ -2,6 +2,13 @@
 
 本项目遵循 [Semantic Versioning](https://semver.org/lang/zh-CN/) 规范。
 
+## [0.1.1] - 2026-02-28
+
+### 💥 Breaking Changes
+- **移除播客模式**：删除 `PodcastMode`，主流程不再支持播客分支派发。
+- **统一输出目录**：所有成品统一输出到 `assets/output_audio/`。
+- **配置收敛**：运行态配置收敛为 `clone.json`、`design.json`、`dialogue.json` 与 `personas.json`。
+
 ## [0.1.0] - 2026-02-27
 
 ### ✨ 核心特性 (Features)

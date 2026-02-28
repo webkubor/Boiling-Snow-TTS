@@ -27,7 +27,7 @@ assets/output_audio/
 assets/temp/
 assets/metadata/
 assets/reference_audio/
-assets/podcast_output/
 configs/personas.json
+configs/scratch/*.json
 voice_designs/
 assets/designed_seeds/

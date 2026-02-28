@@ -10,7 +10,7 @@ This project is a custom-tailored **AI Voice Generation Engine** designed for hi
 
 This project significantly evolves the original Qwen3-TTS repository into a production-ready toolkit:
 
-1. **JSON-Driven Architecture**: Total decoupling of creative content from code. Manage episodes, characters, and emotions via `movie_config.json` or `podcast_config.json`.
+1. **JSON-Driven Architecture**: Total decoupling of creative content from code. Manage episodes, characters, and emotions via runtime JSON configs.
 2. **Apple Silicon Native Acceleration**: Fully optimized for **M1/M2/M3** chips. Implements `MPS` hardware acceleration and `SDPA` (Scaled Dot Product Attention), bypassing the NVIDIA CUDA requirement.
 3. **Unified Quaternary Engine**: Seamlessly handles "Voice Cloning", "Voice Design", "Dialogue Theatre", and "Podcast Column" modes within a single command (`main.py`).
 4. **AI Auto-Processing (Ref-Opt)**: Built-in intelligent audio preprocessing. Automatically applies a **1.5s safety offset**, strips background noise, and normalizes clips to lossless WAV format.
@@ -71,7 +71,6 @@ source .venv/bin/activate
 # For Micro-movies
 python main.py
 # For Podcast series
-python main.py podcast
 ```
 
 ---

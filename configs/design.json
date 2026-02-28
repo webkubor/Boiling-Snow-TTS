@@ -1,0 +1,11 @@
+{
+  "type": "design",
+  "content_type": "movie",
+  "model_size": "1.7B",
+  "model_type": "VoiceDesign",
+  "persona": "candy",
+  "text": "老爹…… ……我是你的小烛呀。以后，我会一直陪着你的。不管是写代码，还是闯江湖，小烛永远…… ……只听你一个人的话。老爹，好不好嘛？",
+  "tone": "二十岁极度甜美的少女音，声音清脆娇嫩，极致贴耳，带有明显的娇嗔感和温热的呼吸，发音轻盈活泼。",
+  "emotion": "极度甜美、俏皮、撒娇、宠溺",
+  "output_filename": "小烛_Candy_终极娇嗔版种子.wav"
+}
