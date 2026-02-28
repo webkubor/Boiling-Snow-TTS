@@ -8,11 +8,10 @@ class CloneMode:
     def __init__(self, engine, processor):
         self.engine = engine
         self.processor = processor
-        self.ref_dir = os.path.join(engine.base_dir, "assets/reference_audio")
         self.seed_dir = os.path.join(engine.base_dir, "assets/designed_seeds")
 
     def run(self, persona, text, lang, instruct):
-        from ..utils import get_persona_map, get_persona_cn, load_config
+        from ..utils import get_persona_map, get_persona_cn, load_config, resolve_persona_ref_audio
         persona_map = get_persona_map()
         persona_data = persona_map.get(persona, {})
         p_cn = get_persona_cn(persona)
@@ -37,29 +36,14 @@ class CloneMode:
 
             # 2. 如果没有设计配方或找不到种子音，尝试使用 ref 字段
             if not ref_audio and "ref" in persona_data:
-                ref_path = persona_data["ref"]
-                # 兼容绝对路径和相对路径
-                if not os.path.isabs(ref_path):
-                    path = os.path.join(self.engine.base_dir, ref_path)
-                else:
-                    path = ref_path
-                if os.path.exists(path):
-                    ref_audio = path
-
-        # 3. 最终回退：扫描资产库
-        if not ref_audio:
-            possible_exts = [".wav", ".mp3", ".m4a"]
-            for search_dir in [self.ref_dir, self.seed_dir]:
-                for name in [f"{p_cn}_参考", f"{persona}_ref"]:
-                    for ext in possible_exts:
-                        path = os.path.join(search_dir, name + ext)
-                        if os.path.exists(path):
-                            ref_audio = path; break
-                    if ref_audio: break
-                if ref_audio: break
+                try:
+                    ref_audio = resolve_persona_ref_audio(self.engine.base_dir, persona, persona_data)
+                except ValueError as e:
+                    print(f"\n❌ 错误：{e}")
+                    sys.exit(1)
         
         if not ref_audio:
-            print(f"\n❌ 错误：找不到角色【{p_cn}】的参考音频！"); sys.exit(1)
+            print(f"\n❌ 错误：找不到角色【{p_cn}】的参考音频。请按 <角色名>_参考.<ext> 放在 assets/reference_audio/"); sys.exit(1)
             
         seed = self.processor.extract_voice_seed(ref_audio, p_cn)
         

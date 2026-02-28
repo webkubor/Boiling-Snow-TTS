@@ -16,3 +16,4 @@
 - 根目录不再接受额外临时 JSON。
 - 运行前会执行内置策略校验（字段完整性、文本长度、角色合法性、禁用关键词）。
 - 角色必须在 `personas.json` 中注册。
+- `personas.json` 的 `ref` 必须遵循统一命名：`assets/reference_audio/<角色名>_参考.<wav|mp3|m4a>`。

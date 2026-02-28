@@ -48,7 +48,7 @@ python main.py scratch/temp_demo.json
 **恭喜！** 你的配音成品已经躺在 `assets/output_audio/` 目录里🎉。
 
 **💡 声音克隆技巧 (Voice Cloning)：**
-如果你想复刻某个新角色，只需将该角色的 **任意长度原始录音**（支持 `wav`, `mp3`, `m4a`）放入 `assets/reference_audio/`，命名为 `{角色名}_参考.wav`。
+如果你想复刻某个新角色，只需将该角色的 **任意长度原始录音**（支持 `wav`, `mp3`, `m4a`）放入 `assets/reference_audio/`，命名为 `{角色名}_参考.<ext>`，并在 `personas.json` 的 `ref` 中填写同名路径。
 AI 会自动为您裁剪最佳片段。然后在对应的 JSON 配置中填入该 `角色名` 并设置 `model_type` 为 `Base` 即可。
 
 ---

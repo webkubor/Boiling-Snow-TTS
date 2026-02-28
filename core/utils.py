@@ -7,6 +7,8 @@ from typing import Any, Dict, Tuple
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PERSONA_CONFIG = os.path.join(BASE_DIR, "configs/personas.json")
 CONFIG_DIR = os.path.join(BASE_DIR, "configs")
+REFERENCE_AUDIO_DIR_REL = "assets/reference_audio"
+ALLOWED_REFERENCE_EXTS = (".wav", ".mp3", ".m4a")
 
 CORE_RUNTIME_CONFIGS = {
     "clone": "clone.json",
@@ -51,6 +53,63 @@ def get_persona_cn(persona_en):
 def load_config(path):
     with open(path, 'r', encoding='utf-8') as f:
         return json.load(f)
+
+def _expected_ref_base(persona_name: str) -> str:
+    return f"{persona_name}_参考"
+
+def _normalize_ref_path(ref_path: str) -> str:
+    return ref_path.replace("\\", "/")
+
+def validate_persona_ref_rule(persona: str, persona_data: Dict[str, Any]):
+    """强制约束：ref 必须位于 assets/reference_audio 且命名符合 <角色名>_参考.<ext>。"""
+    if not isinstance(persona_data, dict):
+        return
+    if "ref" not in persona_data:
+        return
+
+    persona_name = str(persona_data.get("name", "")).strip()
+    ref_rel = str(persona_data.get("ref", "")).strip()
+    if not persona_name:
+        raise ValueError(f"personas.json 中 {persona} 缺少 name。")
+    if not ref_rel:
+        raise ValueError(f"personas.json 中 {persona} 的 ref 不能为空。")
+
+    normalized_ref = _normalize_ref_path(ref_rel)
+    expected_prefix = f"{REFERENCE_AUDIO_DIR_REL}/"
+    if not normalized_ref.startswith(expected_prefix):
+        raise ValueError(
+            f"personas.json 中 {persona} 的 ref 非法：{ref_rel}。"
+            f"必须放在 {REFERENCE_AUDIO_DIR_REL}/ 下。"
+        )
+
+    ref_name = os.path.basename(normalized_ref)
+    ref_stem, ref_ext = os.path.splitext(ref_name)
+    if ref_ext.lower() not in ALLOWED_REFERENCE_EXTS:
+        raise ValueError(
+            f"personas.json 中 {persona} 的 ref 后缀非法：{ref_ext}。"
+            f"仅允许 {', '.join(ALLOWED_REFERENCE_EXTS)}"
+        )
+
+    expected_stem = _expected_ref_base(persona_name)
+    if ref_stem != expected_stem:
+        raise ValueError(
+            f"personas.json 中 {persona} 的 ref 命名不符合规范：{ref_name}。"
+            f"应为 {expected_stem}<ext>"
+        )
+
+def resolve_persona_ref_audio(base_dir: str, persona: str, persona_data: Dict[str, Any]) -> str:
+    """按强规则解析参考音频路径，并校验文件存在。"""
+    validate_persona_ref_rule(persona, persona_data)
+    ref_rel = str(persona_data.get("ref", "")).strip()
+    if not ref_rel:
+        return ""
+    ref_path = os.path.join(base_dir, ref_rel)
+    if not os.path.exists(ref_path):
+        raise ValueError(
+            f"角色 {persona} 的参考音频不存在：{ref_rel}。"
+            f"请确保文件位于 {REFERENCE_AUDIO_DIR_REL}/ 且命名为 <角色名>_参考.<ext>。"
+        )
+    return ref_path
 
 def _in_configs_dir(path: str) -> bool:
     abs_configs = os.path.abspath(CONFIG_DIR)
@@ -119,6 +178,11 @@ def validate_runtime_config(config: Dict[str, Any], config_ref: str = ""):
     model_type = config.get("model_type", "Base")
     lines = config.get("lines")
 
+    # 注册表层面的命名规则校验（仅校验声明了 ref 的角色）
+    for persona_key, persona_data in persona_map.items():
+        if isinstance(persona_data, dict) and "ref" in persona_data:
+            validate_persona_ref_rule(persona_key, persona_data)
+
     if isinstance(lines, list):
         for idx, line in enumerate(lines, start=1):
             if not isinstance(line, dict):
@@ -128,6 +192,10 @@ def validate_runtime_config(config: Dict[str, Any], config_ref: str = ""):
                 raise ValueError(f"lines[{idx}] 缺少 role/persona。")
             if role_or_persona and role_or_persona not in persona_map:
                 raise ValueError(f"lines[{idx}] 角色未注册：{role_or_persona}。请先在 personas.json 定义。")
+            if role_or_persona and isinstance(persona_map.get(role_or_persona), dict):
+                pdata = persona_map.get(role_or_persona, {})
+                if "ref" in pdata:
+                    resolve_persona_ref_audio(BASE_DIR, role_or_persona, pdata)
             _assert_text_rules(line.get("text", ""), f"lines[{idx}].text", max_text_chars)
             merged_instruct = " ".join([
                 str(line.get("tone", "")),
@@ -144,6 +212,10 @@ def validate_runtime_config(config: Dict[str, Any], config_ref: str = ""):
         persona = config.get("persona")
         if persona and persona not in persona_map:
             raise ValueError(f"persona 未注册：{persona}。请先在 personas.json 定义。")
+        if persona and isinstance(persona_map.get(persona), dict):
+            pdata = persona_map.get(persona, {})
+            if "ref" in pdata:
+                resolve_persona_ref_audio(BASE_DIR, persona, pdata)
         if model_type != "VoiceDesign":
             _assert_text_rules(config.get("text", ""), "text", max_text_chars)
 
