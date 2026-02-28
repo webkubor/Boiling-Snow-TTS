@@ -1,0 +1,9 @@
+{
+  "type": "dialogue",
+  "title": "沸腾之雪·剧场演出",
+  "lines": [
+    { "persona": "ning_guanchen", "text": "顾姑娘，这药路凶险，你真要一人独行？", "emotion": "关心" },
+    { "persona": "gu_qiyue", "text": "我本就是独行人，不劳宁道长费心。", "emotion": "清冷" }
+  ],
+  "output_filename": "过场对话_宁顾演示.wav"
+}

@@ -58,22 +58,37 @@ class VoiceCloner(TTSBaseEngine):
             return audio_path
 
     def process(self, text, persona, language, instruct):
+        from .utils import get_persona_map
+        persona_map = get_persona_map()
+        persona_data = persona_map.get(persona, {})
         persona_cn = get_persona_cn(persona)
         
-        # 扫描资产库
-        possible_exts = [".wav", ".mp3", ".m4a"]
+        # --- 核心改进：智能解析参考源 ---
         ref_audio = None
-        for name in [f"{persona_cn}_参考", f"{persona}_ref"]:
-            for ext in possible_exts:
-                path = os.path.join(self.ref_dir, name + ext)
-                if os.path.exists(path):
-                    ref_audio = path
-                    break
-            if ref_audio: break
+        if isinstance(persona_data, dict) and "ref" in persona_data:
+            path = os.path.join(self.ref_dir, persona_data["ref"])
+            if os.path.exists(path):
+                ref_audio = path
+        
+        # 回退逻辑：扫描资产库
+        if not ref_audio:
+            possible_exts = [".wav", ".mp3", ".m4a"]
+            for name in [f"{persona_cn}_参考", f"{persona}_ref"]:
+                for ext in possible_exts:
+                    path = os.path.join(self.ref_dir, name + ext)
+                    if os.path.exists(path):
+                        ref_audio = path
+                        break
+                if ref_audio: break
         
         if not ref_audio:
             print(f"\n❌ 错误：找不到角色【{persona_cn}】的参考音频底稿！")
             sys.exit(1)
+            
+        # --- 核心改进：注入默认音色描述 ---
+        if isinstance(persona_data, dict) and "instruction" in persona_data:
+            default_instruct = persona_data["instruction"]
+            instruct = f"{default_instruct} {instruct}".strip()
         
         processed_ref = self._prepare_reference(ref_audio, persona)
         print(f"👥 模式：声音克隆 | 物理参考源 (避障WAV)：{os.path.basename(processed_ref)}")
@@ -82,5 +97,6 @@ class VoiceCloner(TTSBaseEngine):
             text=text, 
             language=language, 
             ref_audio=processed_ref, 
-            x_vector_only_mode=True
+            x_vector_only_mode=True,
+            instruction=instruct # 确保指令透传
         )

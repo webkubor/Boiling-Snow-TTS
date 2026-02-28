@@ -13,13 +13,15 @@ def main():
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     
     # --- 增强版智能路由 ---
-    config_name = "movie_config.json"
+    config_name = "single.json" # 默认指向单人任务模板
     if len(sys.argv) > 1:
         arg = sys.argv[1].lower()
         if arg == "podcast":
             config_name = "podcast_config.json"
-        elif arg == "scene": # 【新增】快捷指向场景模板
-            config_name = "scene_config.json"
+        elif arg == "dialogue" or arg == "scene": # 快捷指向对话模板
+            config_name = "dialogue.json"
+        elif arg == "single":
+            config_name = "single.json"
         elif arg.endswith(".json"):
             config_name = arg
     
@@ -42,10 +44,13 @@ def main():
     podcast = PodcastMode(engine, processor, cloner)
     
     content_type = cfg.get("content_type", "movie")
-    is_dial = "lines" in cfg and isinstance(cfg["lines"], list)
+    # 智能识别任务类型
+    task_type = cfg.get("type", "single") 
+    is_dial = task_type == "dialogue" or ("lines" in cfg and isinstance(cfg["lines"], list))
     
     # 3. 模式分发
     if mode_type == "VoiceDesign":
+        # ... (保持原逻辑)
         instruct = f"{cfg.get('tone','')}, {cfg.get('emotion','')}".strip(", ")
         wavs, sr = designer.run(cfg.get("text", ""), cfg.get("language","Chinese"), instruct)
         final_path = generate_output_path(cfg, BASE_DIR)
@@ -60,6 +65,7 @@ def main():
         final_path = dialogue.run(cfg)
 
     elif content_type == "podcast":
+        # ... (保持原逻辑)
         wavs, sr, _ = podcast.run(cfg)
         if wavs:
             final_path = generate_output_path(cfg, BASE_DIR)
@@ -69,6 +75,7 @@ def main():
             final_path = generate_output_path(cfg, BASE_DIR)
 
     else:
+        # 默认走 CloneMode (单人任务)
         instruct = f"{cfg.get('tone','')}, {cfg.get('emotion','')}".strip(", ")
         wavs, sr = cloner.run(cfg.get("persona"), cfg.get("text", ""), cfg.get("language","Chinese"), instruct)
         final_path = generate_output_path(cfg, BASE_DIR)

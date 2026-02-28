@@ -17,7 +17,10 @@ def get_persona_map():
 
 def get_persona_cn(persona_en):
     persona_map = get_persona_map()
-    return persona_map.get(persona_en, persona_en)
+    data = persona_map.get(persona_en, persona_en)
+    if isinstance(data, dict):
+        return data.get("name", persona_en)
+    return data
 
 def load_config(path):
     with open(path, 'r', encoding='utf-8') as f:
