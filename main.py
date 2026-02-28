@@ -65,7 +65,14 @@ def main():
     else:
         # 默认走 CloneMode (单人任务)
         instruct = f"{cfg.get('tone','')}, {cfg.get('emotion','')}".strip(", ")
-        wavs, sr = cloner.run(cfg.get("persona"), cfg.get("text", ""), cfg.get("language","Chinese"), instruct)
+        emotion_priority = bool(cfg.get("emotion_priority", False))
+        wavs, sr = cloner.run(
+            cfg.get("persona"),
+            cfg.get("text", ""),
+            cfg.get("language","Chinese"),
+            instruct,
+            emotion_priority=emotion_priority
+        )
         final_path = generate_output_path(cfg, BASE_DIR)
         sf.write(final_path, wavs[0], sr)
         processor.apply_post_tuning(final_path)

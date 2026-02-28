@@ -14,9 +14,11 @@ class DialogueMode:
         print(f"🎭 进入【对话模式】，剧目：{config.get('title')}")
         segments = []
         line_paths = []
+        global_emotion_priority = bool(config.get("emotion_priority", False))
         for i, line in enumerate(config["lines"]):
             persona = line.get("persona") or line.get("role")
             text = line.get("text")
+            line_emotion_priority = bool(line.get("emotion_priority", global_emotion_priority))
             
             raw_instruct = f"{line.get('tone','')}，{line.get('emotion','')}".strip("，")
             
@@ -31,7 +33,13 @@ class DialogueMode:
             
             print(f"\n🎬 正在生成第 {i+1} 句 ({get_persona_cn(persona)}) | 反应预热：{action}...")
             
-            wavs, sr = self.cloner.run(persona, text, config.get("language","Chinese"), enhanced_instruct)
+            wavs, sr = self.cloner.run(
+                persona,
+                text,
+                config.get("language","Chinese"),
+                enhanced_instruct,
+                emotion_priority=line_emotion_priority
+            )
             
             temp_path = generate_output_path(config, self.engine.base_dir, suffix=f"_line{i+1}")
             sf.write(temp_path, wavs[0], sr)

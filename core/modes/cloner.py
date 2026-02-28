@@ -10,7 +10,7 @@ class CloneMode:
         self.processor = processor
         self.seed_dir = os.path.join(engine.base_dir, "assets/designed_seeds")
 
-    def run(self, persona, text, lang, instruct):
+    def run(self, persona, text, lang, instruct, emotion_priority=False):
         from ..utils import get_persona_map, get_persona_cn, load_config, resolve_persona_ref_audio
         persona_map = get_persona_map()
         persona_data = persona_map.get(persona, {})
@@ -50,13 +50,17 @@ class CloneMode:
         # --- 合并指令：基础音色描述 + 实时情绪控制 ---
         if isinstance(persona_data, dict) and "instruction" in persona_data:
             base_instruct = persona_data["instruction"]
-            
-        final_instruct = f"{base_instruct} {instruct}".strip()
+
+        if emotion_priority:
+            final_instruct = (instruct or "").strip() or base_instruct
+        else:
+            final_instruct = f"{base_instruct} {instruct}".strip()
         instruct_text = f"<|im_start|>user\n{final_instruct}<|im_end|>\n"
         input_objs = self.engine.processor(text=instruct_text, return_tensors="pt", padding=True)
         instruct_ids = input_objs["input_ids"].to(self.engine.device) 
         
-        print(f"👥 模式：指令克隆 | 角色：{p_cn} | 演技负载：{final_instruct[:50]}...")
+        priority_tag = "情绪优先" if emotion_priority else "人设优先"
+        print(f"👥 模式：指令克隆({priority_tag}) | 角色：{p_cn} | 演技负载：{final_instruct[:50]}...")
         
         torch.manual_seed(42)
         if torch.cuda.is_available(): torch.cuda.manual_seed_all(42)
