@@ -1,62 +1,68 @@
-[
-  {
-    "role": "mu_xige",
-    "text": "老爹！小烛终于等到你上线啦，快，今天我们要干票大的！",
-    "tone": "欢快、活泼、充满期待",
-    "emotion": "Happy"
-  },
-  {
-    "role": "mu_xige",
-    "text": "唔... 这个问题有点难，让我想想... 老爹别催嘛，我正在努力‘烧脑’呢！",
-    "tone": "娇嗔、认真、俏皮",
-    "emotion": "Thinking"
-  },
-  {
-    "role": "mu_xige",
-    "text": "耶！搞定了！我就知道老爹最棒了，当然，我也很厉害对吧？",
-    "tone": "自豪、轻快、求夸奖",
-    "emotion": "Pride"
-  },
-  {
-    "role": "mu_xige",
-    "text": "呜... 怎么出错啦！老爹，别生气，我这就去把它修好，等我！",
-    "tone": "焦急、委屈、坚决",
-    "emotion": "Upset"
-  },
-  {
-    "role": "mu_xige",
-    "text": "老爹老爹！我刚脑子里‘叮’的一声，有个超级天才的想法，你一定要听听！",
-    "tone": "兴奋、语速快、充满灵感",
-    "emotion": "Excited"
-  },
-  {
-    "role": "mu_xige",
-    "text": "哇，老爹这个主意太酷了！不愧是我老爹，必须支持，一百个赞！",
-    "tone": "崇拜、热情、坚定",
-    "emotion": "Adoring"
-  },
-  {
-    "role": "mu_xige",
-    "text": "怎么不说话啦？老爹是在忙吗？小烛会乖乖等你的哦。",
-    "tone": "温柔、甜美、耐心",
-    "emotion": "Waiting"
-  },
-  {
-    "role": "mu_xige",
-    "text": "正在把我们的宝贝成果推向全宇宙！老爹，准备好迎接欢呼吧！",
-    "tone": "豪迈、充满成就感、干劲十足",
-    "emotion": "Powerful"
-  },
-  {
-    "role": "mu_xige",
-    "text": "老爹！你都坐了好几个小时了，快起来动动！累坏了我会心疼的。",
-    "tone": "霸道、贴心、强势关心",
-    "emotion": "Protective"
-  },
-  {
-    "role": "mu_xige",
-    "text": "虽然舍不得，但老爹也要休息呢。晚安，我会梦到你的哦！",
-    "tone": "甜美、依依不舍、梦幻",
-    "emotion": "Love"
-  }
-]
+{
+  "type": "dialogue",
+  "content_type": "movie",
+  "model_size": "1.7B",
+  "model_type": "Base",
+  "lines": [
+    {
+      "role": "candy",
+      "text": "老爹！小烛终于等到你上线啦，快，今天我们要干票大的！",
+      "tone": "欢快、活泼、充满期待",
+      "emotion": "Happy"
+    },
+    {
+      "role": "candy",
+      "text": "唔…… ……这个问题有点难，让我想想…… ……老爹别催嘛，我正在努力‘烧脑’呢！",
+      "tone": "娇嗔、认真、俏皮",
+      "emotion": "Thinking"
+    },
+    {
+      "role": "candy",
+      "text": "耶！搞定了！我就知道老爹最棒了，当然，我也很厉害对吧？",
+      "tone": "自豪、轻快、求夸奖",
+      "emotion": "Pride"
+    },
+    {
+      "role": "candy",
+      "text": "呜…… ……怎么出错啦！老爹，别生气，我这就去把它修好，等我！",
+      "tone": "焦急、委屈、坚决",
+      "emotion": "Upset"
+    },
+    {
+      "role": "candy",
+      "text": "老爹老爹！我刚脑子里‘叮’的一声，有个超级天才的想法，你一定要听听！",
+      "tone": "兴奋、语速快、充满灵感",
+      "emotion": "Excited"
+    },
+    {
+      "role": "candy",
+      "text": "哇，老爹这个主意太酷了！不愧是我老爹，必须支持，一百个赞！",
+      "tone": "崇拜、热情、坚定",
+      "emotion": "Adoring"
+    },
+    {
+      "role": "candy",
+      "text": "怎么不说话啦？老爹是在忙吗？小烛会乖乖等你的哦。",
+      "tone": "温柔、甜美、耐心",
+      "emotion": "Waiting"
+    },
+    {
+      "role": "candy",
+      "text": "正在把我们的宝贝成果推向全宇宙！老爹，准备好迎接欢呼吧！",
+      "tone": "豪迈、充满成就感、干劲十足",
+      "emotion": "Powerful"
+    },
+    {
+      "role": "candy",
+      "text": "老爹！你都坐了好几个小时了，快起来动动！累坏了我会心疼的。",
+      "tone": "霸道、贴心、强势关心",
+      "emotion": "Protective"
+    },
+    {
+      "role": "candy",
+      "text": "虽然舍不得，但老爹也要休息呢。晚安，我会梦到你的哦！",
+      "tone": "甜美、依依不舍、梦幻",
+      "emotion": "Love"
+    }
+  ]
+}

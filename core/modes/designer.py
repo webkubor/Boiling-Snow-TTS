@@ -6,6 +6,6 @@ class DesignMode:
 
     def run(self, text, lang, instruct):
         print(f"🎨 模式：音色设计 | 指令集：{instruct}")
-        return self.engine.model.generate_voice_design(
+        return self.engine.wrapped_model.generate_voice_design(
             text=text, language=lang, instruct=instruct
         )

@@ -1,7 +1,9 @@
 {
   "type": "single",
-  "persona": "ning_guanchen",
-  "text": "贫道宁观尘，一介游方道士。老爹，这版 3-JSON 架构已正式入驻 configs 档案库，请阅。",
-  "emotion": "洒脱",
-  "output_filename": "宁观尘_单人演示.wav"
+  "persona": "candy",
+  "model_type": "VoiceDesign",
+  "text": "老爹！小烛终于等到你上线啦…… ……快，今天我们要干票大的！",
+  "tone": "二十二岁现代都市少女音，暖银质感，声音清脆且富有弹性，带有一点点调侃和上扬的钩子。",
+  "emotion": "傲娇、热烈、充满期待",
+  "output_filename": "小烛_Candy_设计师处女作.wav"
 }
