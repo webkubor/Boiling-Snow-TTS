@@ -26,17 +26,51 @@ env/
 .env
 
 # --- Boiling-Snow-TTS 核心隔离资产 ---
-out/                     # 导出成品
-assets/production/       # 生成历史日志
-assets/reference/        # 原始素材 (新)
-assets/reference_audio/  # 原始素材 (旧)
-assets/temp/             # 黄金样音核心库 (资产保值)
-models/                  # 模型权重文件 (禁止上传)
+# 导出成品
+out/
+# 生成历史日志
+assets/production/
+# 原始素材 (新)
+assets/reference/
+# 原始素材 (旧)
+assets/reference_audio/
+# 黄金样音核心库 (资产保值)
+assets/temp/
+# 模型权重文件 (禁止上传)
+models/
 
 # --- 敏感配置隔离 ---
-configs/personas.json    # 个人角色映射配置 (禁止上传)
-configs/scratch/*.json   # 临时调试配置
-voice_designs/           # 音色设计配方 (本地缓存)
-assets/designed_seeds/   # (废弃) 旧版种子路径
-assets/output_audio/     # (废弃) 旧版导出路径
-assets/metadata/         # (废弃) 旧版日志路径
+# 个人角色映射配置 (禁止上传)
+configs/personas.json
+# 临时调试配置
+configs/scratch/*.json
+# 音色设计配方 (本地缓存)
+voice_designs/
+# (废弃) 旧版种子路径
+assets/designed_seeds/
+# (废弃) 旧版导出路径
+assets/output_audio/
+# (废弃) 旧版日志路径
+assets/metadata/
+
+# --- 全局音频资产防上传 ---
+# 任何包含 audio 命名的目录
+**/*audio*/
+# 常见音频目录命名
+**/reference/
+**/reference_audio/
+**/output_audio/
+**/temp_audio/
+**/recordings/
+**/voices/
+# 常见音频文件后缀
+*.wav
+*.mp3
+*.m4a
+*.flac
+*.ogg
+*.opus
+*.aac
+*.wma
+*.aiff
+*.alac
