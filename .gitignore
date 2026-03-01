@@ -22,12 +22,21 @@ wheels/
 .vscode/
 venv/
 env/
-models/
-assets/output_audio/
-assets/temp/
-assets/metadata/
-assets/reference_audio/
-configs/personas.json
-configs/scratch/*.json
-voice_designs/
-assets/designed_seeds/
+.venv/
+.env
+
+# --- Boiling-Snow-TTS 核心隔离资产 ---
+out/                     # 导出成品
+assets/production/       # 生成历史日志
+assets/reference/        # 原始素材 (新)
+assets/reference_audio/  # 原始素材 (旧)
+assets/temp/             # 黄金样音核心库 (资产保值)
+models/                  # 模型权重文件 (禁止上传)
+
+# --- 敏感配置隔离 ---
+configs/personas.json    # 个人角色映射配置 (禁止上传)
+configs/scratch/*.json   # 临时调试配置
+voice_designs/           # 音色设计配方 (本地缓存)
+assets/designed_seeds/   # (废弃) 旧版种子路径
+assets/output_audio/     # (废弃) 旧版导出路径
+assets/metadata/         # (废弃) 旧版日志路径

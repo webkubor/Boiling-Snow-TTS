@@ -1,9 +1,14 @@
 {
+  "project_name": "江湖老人_暗坊揭秘",
   "type": "dialogue",
-  "title": "沸腾之雪·剧场演出",
+  "persona": "jianghu_laoren",
   "lines": [
-    { "persona": "ning_guanchen", "text": "顾姑娘，这药路凶险，你真要一人独行？", "emotion": "关心" },
-    { "persona": "gu_qiyue", "text": "我本就是独行人，不劳宁道长费心。", "emotion": "清冷" }
-  ],
-  "output_filename": "过场对话_宁顾演示.wav"
+    {
+      "role": "jianghu_laoren",
+      "reference_audio": "assets/reference_audio/江湖老人_参考.mp3",
+      "text": "名门讲道义，皇权讲法度，可这暗坊的影子里，只认‘价值’。 ... 宁观尘想借孤山的剑，慕夕歌要窥天下的局。 ... 殊不知跨过这道槛，两人便已从看客，成了这死局里…… 最先祭旗的棋子。",
+      "tone": "沧桑、低沉、沙哑，带着看透生死的不屑与叹息。‘价值’二字语速放慢，‘棋子’二字收尾要有冷冽感。",
+      "output_name": "jianghu_old_man_anfang.wav"
+    }
+  ]
 }

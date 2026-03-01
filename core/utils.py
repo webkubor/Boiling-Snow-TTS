@@ -99,15 +99,23 @@ def validate_persona_ref_rule(persona: str, persona_data: Dict[str, Any]):
 
 def resolve_persona_ref_audio(base_dir: str, persona: str, persona_data: Dict[str, Any]) -> str:
     """按强规则解析参考音频路径，并校验文件存在。"""
-    validate_persona_ref_rule(persona, persona_data)
+    # validate_persona_ref_rule(persona, persona_data) # 彻底废弃对原始参考目录的强绑定
+
+    persona_cn = get_persona_cn(persona)
+    temp_ref = os.path.join(base_dir, "assets/temp", f"当前参考_{persona_cn}.wav")
+
+    if os.path.exists(temp_ref):
+        return temp_ref
+
     ref_rel = str(persona_data.get("ref", "")).strip()
     if not ref_rel:
         return ""
     ref_path = os.path.join(base_dir, ref_rel)
     if not os.path.exists(ref_path):
         raise ValueError(
-            f"角色 {persona} 的参考音频不存在：{ref_rel}。"
-            f"请确保文件位于 {REFERENCE_AUDIO_DIR_REL}/ 且命名为 <角色名>_参考.<ext>。"
+            f"角色 {persona} 的参考音频资产不足：\n"
+            f"1. 核心样音缺失：{temp_ref}\n"
+            f"2. 原始素材缺失：{ref_rel}"
         )
     return ref_path
 
@@ -178,10 +186,11 @@ def validate_runtime_config(config: Dict[str, Any], config_ref: str = ""):
     model_type = config.get("model_type", "Base")
     lines = config.get("lines")
 
-    # 注册表层面的命名规则校验（仅校验声明了 ref 的角色）
+    # 注册表层面的命名规则校验（全面放开路径限制，只校验核心逻辑）
     for persona_key, persona_data in persona_map.items():
         if isinstance(persona_data, dict) and "ref" in persona_data:
-            validate_persona_ref_rule(persona_key, persona_data)
+            # validate_persona_ref_rule(persona_key, persona_data) # 切除古板校验
+            pass
 
     if isinstance(lines, list):
         for idx, line in enumerate(lines, start=1):
@@ -235,7 +244,7 @@ def validate_runtime_config(config: Dict[str, Any], config_ref: str = ""):
         print(f"🧩 配置策略校验通过：{config_ref}")
 
 def generate_output_path(config, base_dir, suffix=""):
-    out_dir = os.path.join(base_dir, "assets/output_audio")
+    out_dir = os.path.join(base_dir, "out")
     os.makedirs(out_dir, exist_ok=True)
     if config.get("output_filename") and not suffix:
         return os.path.join(out_dir, config["output_filename"])
@@ -284,7 +293,7 @@ def log_generation_metadata(config, audio_path, base_dir):
         print(f"🧪 [设计配方] 已归档：voice_designs/{persona_cn}.json")
 
     # --- 分支 B：生成历史日志 ---
-    log_dir = os.path.join(base_dir, "assets/metadata/production_logs")
+    log_dir = os.path.join(base_dir, "assets/production")
     os.makedirs(log_dir, exist_ok=True)
     log_file = os.path.join(log_dir, f"{persona_cn}_生成历史.json")
     
