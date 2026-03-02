@@ -1,5 +1,6 @@
 import os
 from pydub import AudioSegment
+from .utils import sanitize_path_component
 
 class AudioProcessor:
     def __init__(self, base_dir):
@@ -7,7 +8,8 @@ class AudioProcessor:
 
     def extract_voice_seed(self, audio_path, persona_cn, max_sec=10, skip_start_ms=1500):
         os.makedirs(self.temp_dir, exist_ok=True)
-        temp_path = os.path.join(self.temp_dir, f"当前参考_{persona_cn}.wav")
+        safe_persona = sanitize_path_component(persona_cn, fallback="未命名角色")
+        temp_path = os.path.join(self.temp_dir, f"当前参考_{safe_persona}.wav")
         if os.path.exists(temp_path) and os.path.getmtime(temp_path) >= os.path.getmtime(audio_path):
             return temp_path
         audio = AudioSegment.from_file(audio_path)

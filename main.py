@@ -8,8 +8,13 @@ from core.utils import (
     generate_output_path,
     get_persona_cn,
     log_generation_metadata,
+    upsert_persona_mapping,
+    resolve_design_voice_key,
+    resolve_design_voice_label,
     resolve_config_path,
+    sanitize_path_component,
     validate_runtime_config,
+    write_generation_json,
 )
 from core.modes.cloner import CloneMode
 from core.modes.designer import DesignMode
@@ -53,13 +58,27 @@ def main():
         wavs, sr = designer.run(cfg.get("text", ""), cfg.get("language","Chinese"), instruct)
         final_path = generate_output_path(cfg, BASE_DIR)
         sf.write(final_path, wavs[0], sr)
-        persona_cn = get_persona_cn(cfg.get('persona'))
-        seed_dir = os.path.join(BASE_DIR, "assets/output_audio/designed_seeds")
-        os.makedirs(seed_dir, exist_ok=True)
-        seed_path = os.path.join(seed_dir, f"{persona_cn}_参考.wav")
-        sf.write(seed_path, wavs[0], sr)
-        processor.extract_voice_seed(seed_path, persona_cn)
         processor.apply_post_tuning(final_path)
+        if bool(cfg.get("commit_to_temp", False)):
+            voice_label = resolve_design_voice_label(cfg)
+            voice_key = resolve_design_voice_key(cfg)
+            temp_seed_path = processor.extract_voice_seed(final_path, voice_label, max_sec=10, skip_start_ms=0)
+            ref_rel = os.path.relpath(temp_seed_path, BASE_DIR).replace("\\", "/")
+            design_rel = f"voice_designs/{voice_label}.json"
+            persona_file = upsert_persona_mapping(
+                BASE_DIR,
+                persona_key=voice_key,
+                persona_name=voice_label,
+                ref_rel=ref_rel,
+                design_rel=design_rel,
+                instruction=f"{cfg.get('tone', '')} {cfg.get('emotion', '')}".strip(),
+            )
+            gen_json_path = write_generation_json(BASE_DIR, voice_key, source="voice_design")
+            print(f"🧬 [标准样音] 已沉淀：{os.path.relpath(temp_seed_path, BASE_DIR)}")
+            print(f"🧭 [角色映射] 已更新：{os.path.relpath(persona_file, BASE_DIR)} -> {voice_key}")
+            print(f"🧾 [生成配置] 已输出：{os.path.relpath(gen_json_path, BASE_DIR)}")
+        else:
+            print("📝 [待确认] 设计结果已输出到 out/。确认满意后，将 commit_to_temp 设为 true 再执行一次即可落库。")
 
     elif is_dial:
         final_path = dialogue.run(cfg)
@@ -73,7 +92,8 @@ def main():
             cfg.get("text", ""),
             cfg.get("language","Chinese"),
             instruct,
-            emotion_priority=emotion_priority
+            emotion_priority=emotion_priority,
+            reference_audio=cfg.get("reference_audio")
         )
         final_path = generate_output_path(cfg, BASE_DIR)
         sf.write(final_path, wavs[0], sr)

@@ -24,6 +24,11 @@ venv/
 env/
 .venv/
 .env
+node_modules/
+webui/node_modules/
+webui/.vite/
+npm-debug.log*
+yarn-error.log*
 
 # --- Boiling-Snow-TTS 核心隔离资产 ---
 # 导出成品
@@ -42,8 +47,8 @@ models/
 # --- 敏感配置隔离 ---
 # 个人角色映射配置 (禁止上传)
 configs/personas.json
-# 临时调试配置
-configs/scratch/*.json
+# 实验配置（默认不上传）
+configs/scratch/
 # 音色设计配方 (本地缓存)
 voice_designs/
 # (废弃) 旧版种子路径

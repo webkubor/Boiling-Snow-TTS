@@ -38,7 +38,8 @@ class DialogueMode:
                 text,
                 config.get("language","Chinese"),
                 enhanced_instruct,
-                emotion_priority=line_emotion_priority
+                emotion_priority=line_emotion_priority,
+                allow_ref_fallback=False
             )
             
             temp_path = generate_output_path(config, self.engine.base_dir, suffix=f"_line{i+1}")
