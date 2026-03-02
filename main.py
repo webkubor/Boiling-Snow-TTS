@@ -58,7 +58,7 @@ def main():
         wavs, sr = designer.run(cfg.get("text", ""), cfg.get("language","Chinese"), instruct)
         final_path = generate_output_path(cfg, BASE_DIR)
         sf.write(final_path, wavs[0], sr)
-        processor.apply_post_tuning(final_path)
+        processor.apply_design_cleanup(final_path)
         if bool(cfg.get("commit_to_temp", False)):
             voice_label = resolve_design_voice_label(cfg)
             voice_key = resolve_design_voice_key(cfg)

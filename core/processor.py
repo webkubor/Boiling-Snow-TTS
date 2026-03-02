@@ -31,18 +31,56 @@ class AudioProcessor:
         e = detect(audio.reverse())
         return audio[s : (len(audio) - e)] if s + e < len(audio) else audio
 
-    def apply_post_tuning(self, path, is_dialogue=False):
+    def apply_post_tuning(
+        self,
+        path,
+        is_dialogue=False,
+        trim_head_ms=0,
+        trim_tail_ms=0,
+        enable_fade=True,
+    ):
+        """统一后处理。
+
+        - trim_head_ms / trim_tail_ms: 额外裁切首尾，单位毫秒
+        - enable_fade: 是否应用极短淡入淡出
+        """
         try:
             audio = AudioSegment.from_file(path)
             # 对话模式放宽阈值，保全尾音颤动
             thresh = -55.0 if is_dialogue else -50.0
             audio = self._trim_silence(audio, threshold=thresh)
+            if trim_head_ms > 0 and len(audio) > trim_head_ms:
+                audio = audio[trim_head_ms:]
+            if trim_tail_ms > 0 and len(audio) > trim_tail_ms:
+                audio = audio[:-trim_tail_ms]
             audio = audio.normalize(headroom=0.1)
             # 极短淡入淡出，防止切断尾音
-            audio = audio.fade_in(50).fade_out(50)
+            if enable_fade:
+                audio = audio.fade_in(50).fade_out(50)
             audio.export(path, format="wav")
             return audio
         except: return None
+
+    def apply_design_cleanup(self, path):
+        """设计模式专用净化：尽量只保留文案本体，去掉前后杂音/气口。"""
+        try:
+            audio = AudioSegment.from_file(path)
+            # 设计试听更激进：提高阈值以裁掉低能量杂音
+            audio = self._trim_silence(audio, threshold=-45.0)
+            # 再小幅裁切首尾，减少起音/尾部杂讯
+            head_cut = 20 if len(audio) > 200 else 0
+            tail_cut = 20 if len(audio) > 200 else 0
+            if head_cut:
+                audio = audio[head_cut:]
+            if tail_cut and len(audio) > tail_cut:
+                audio = audio[:-tail_cut]
+            audio = audio.normalize(headroom=0.1)
+            # 设计模式关闭淡入，避免“前面像垫了一段”
+            audio = audio.fade_out(30)
+            audio.export(path, format="wav")
+            return audio
+        except:
+            return None
 
     def merge_scene(self, segments, output_path, gap_ms=600, overlap_ms=200):
         """【高级重构】支持音频重叠（Cross-fade）缝合，营造交织感"""

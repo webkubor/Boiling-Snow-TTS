@@ -68,7 +68,20 @@ npm run web:dev
 
 访问地址：`http://127.0.0.1:5173`
 
-## 5. 构建与检查
+## 5. 批量设计命令
+
+```bash
+# 先预览将执行哪些配置
+npm run design:batch:dry
+
+# 执行 AI 女友批量设计（默认批量文件：configs/presets/AI女友_批量设计.json）
+npm run design:batch
+
+# 指定其他批量配置
+.venv/bin/python scripts/run_design_batch.py presets/AI女友_批量设计.json
+```
+
+## 6. 构建与检查
 
 ```bash
 # 前端生产构建
@@ -78,7 +91,7 @@ npm run web:build
 .venv/bin/python -m py_compile web_api.py
 ```
 
-## 6. 常见问题排查命令
+## 7. 常见问题排查命令
 
 ```bash
 # 看端口占用（API）

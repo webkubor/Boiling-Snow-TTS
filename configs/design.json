@@ -3,10 +3,10 @@
   "content_type": "movie",
   "model_size": "1.7B",
   "model_type": "VoiceDesign",
-  "voice_name": "candy_v1",
+  "voice_name": "ai_girlfriend_v1",
   "commit_to_temp": false,
-  "text": "",
-  "tone": "二十岁极度甜美的少女音，声音清脆娇嫩，极致贴耳，带有明显的娇嗔感和温热的呼吸，发音轻盈活泼。",
-  "emotion": "极度甜美、俏皮、撒娇、宠溺",
-  "output_filename": "小烛_Candy_终极娇嗔版种子.wav"
+  "text": "我在呢，今天也会一直陪着你。",
+  "tone": "年轻女性，贴耳近讲，音色温暖细腻，语速偏慢，咬字清晰但不过分播音腔。开头直接入字，不要前置气口、笑声、喘息或任何杂音。",
+  "emotion": "温柔，依恋，安抚，轻微撒娇，稳定陪伴感",
+  "output_filename": "AI女友_设计试听_v1.wav"
 }

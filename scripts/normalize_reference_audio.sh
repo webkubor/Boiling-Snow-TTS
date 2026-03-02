@@ -74,6 +74,5 @@ rename_file "江湖老人.mp3" "江湖老人_参考.mp3"
 
 # 3) 同角色别名去重（保留规范命名）
 dedupe_alias "宁观尘_参考.mp3" "宁观尘.mp3"
-dedupe_alias "说书人_参考.wav" "江湖说书人.wav"
 
 echo "✅ reference_audio 规范化完成。归档目录: $ARCHIVE_DIR"

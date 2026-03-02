@@ -1,6 +1,7 @@
 import os
 import traceback
 import uuid
+import time
 from typing import Any, Dict, List, Optional
 
 import soundfile as sf
@@ -164,7 +165,7 @@ def _run_design(runtime: Dict[str, Any], cfg: Dict[str, Any]) -> str:
     sf.write(final_path, wavs[0], sr)
 
     voice_label = resolve_design_voice_label(cfg)
-    runtime["processor"].apply_post_tuning(final_path)
+    runtime["processor"].apply_design_cleanup(final_path)
     if bool(cfg.get("commit_to_temp", False)):
         voice_key = resolve_design_voice_key(cfg)
         temp_seed_path = runtime["processor"].extract_voice_seed(final_path, voice_label, max_sec=10, skip_start_ms=0)
@@ -215,11 +216,12 @@ def _run_clone(runtime: Dict[str, Any], cfg: Dict[str, Any]) -> str:
 def _format_generate_response(final_path: str) -> Dict[str, Any]:
     """统一封装生成结果，返回相对路径与播放/下载地址。"""
     file_name = os.path.basename(final_path)
+    cache_bust = int(time.time() * 1000)
     return {
         "ok": True,
         "path": os.path.relpath(final_path, BASE_DIR),
         "file_name": file_name,
-        "audio_url": f"/api/files/{file_name}",
+        "audio_url": f"/api/files/{file_name}?t={cache_bust}",
         "download_url": f"/api/files/{file_name}?download=1",
     }
 
@@ -326,13 +328,14 @@ def generate(req: GenerateRequest):
 
 
 @app.get("/api/files/{file_name}")
-def serve_file(file_name: str, download: int = 0):
+def serve_file(file_name: str, download: int = 0, t: Optional[int] = None):
     """提供音频文件访问与下载能力。"""
     safe_name = os.path.basename(file_name)
     file_path = os.path.join(BASE_DIR, "out", safe_name)
     if not os.path.exists(file_path):
         raise HTTPException(status_code=404, detail="文件不存在")
 
+    headers = {"Cache-Control": "no-store, no-cache, must-revalidate, max-age=0"}
     if download:
-        return FileResponse(file_path, filename=safe_name, media_type="audio/wav")
-    return FileResponse(file_path, media_type="audio/wav")
+        return FileResponse(file_path, filename=safe_name, media_type="audio/wav", headers=headers)
+    return FileResponse(file_path, media_type="audio/wav", headers=headers)
