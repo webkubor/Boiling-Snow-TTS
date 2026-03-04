@@ -1,13 +1,17 @@
 {
-  "project_name": "江湖老人_暗坊揭秘",
+  "project_name": "周星驰_暗坊揭秘",
+  "title": "无厘头暗坊",
   "type": "dialogue",
-  "persona": "jianghu_laoren",
+  "persona": "zhou_xingchi",
+  "emotion_priority": true,
   "lines": [
     {
-      "role": "jianghu_laoren",
-      "reference_audio": "assets/reference_audio/江湖老人_参考.mp3",
+      "role": "zhou_xingchi",
+      "reference_audio": "assets/temp/当前参考_搞笑男.wav",
       "text": "名门讲道义，皇权讲法度，可这暗坊的影子里，只认‘价值’。 ... 宁观尘想借孤山的剑，慕夕歌要窥天下的局。 ... 殊不知跨过这道槛，两人便已从看客，成了这死局里…… 最先祭旗的棋子。",
-      "tone": "沧桑、低沉、沙哑，带着看透生死的不屑与叹息。‘价值’二字语速放慢，‘棋子’二字收尾要有冷冽感。",
+      "tone": "无厘头、机灵、带点夸张反差喜感，节奏灵活。‘价值’二字轻微停顿后抖包袱感，‘棋子’二字收尾带调侃意味。",
+      "emotion": "夸张、调侃、反差喜剧、轻微破音感但不要失真",
+      "emotion_priority": true,
       "output_name": "jianghu_old_man_anfang.wav"
     }
   ]

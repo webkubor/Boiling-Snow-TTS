@@ -23,10 +23,15 @@ class DialogueMode:
             raw_instruct = f"{line.get('tone','')}，{line.get('emotion','')}".strip("，")
             
             # --- 【灵魂注入：动态反应逻辑】 ---
-            # 1. 模拟“听话后”的瞬间反应：先有气，后有声
-            # 2. 随机注入发声前的预热指令（轻笑、叹息、深吸气）
+            # 根据语气关键词切换预热动作，避免与目标情绪冲突（如喜剧句子却触发低沉喘息）。
             import random
-            prep_actions = ["轻笑一声", "深深吸一口气", "先发出一声慵懒的鼻音", "先有一声低沉的喘息"]
+            style_hint = f"{line.get('tone','')} {line.get('emotion','')}"
+            if any(k in style_hint for k in ["搞笑", "喜剧", "无厘头", "幽默", "机灵", "调侃", "活泼"]):
+                prep_actions = ["先轻笑一声", "先抬高语调哼一声", "先来一声俏皮鼻音", "先短促吸气再快节奏开口"]
+            elif any(k in style_hint for k in ["悲伤", "伤感", "低沉", "哽咽", "沉重"]):
+                prep_actions = ["先轻轻叹一口气", "先缓慢吸气", "先压低嗓音再开口", "先短暂停顿后低声开口"]
+            else:
+                prep_actions = ["轻笑一声", "深深吸一口气", "先发出一声慵懒的鼻音", "先有一声低沉的喘息"]
             action = random.choice(prep_actions)
             
             enhanced_instruct = f"[强制要求：{action}，说话前留有明显的生理性气口，语气起伏要体现出对上一句话的即时反应] {raw_instruct}"
