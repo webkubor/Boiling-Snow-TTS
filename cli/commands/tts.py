@@ -27,8 +27,8 @@ from core.utils import get_persona_map, get_persona_cn
 console = Console()
 
 
-def _init_engine(model_size: str = "1.7B"):
-    return TTSBaseEngine("Base", model_size)
+def _init_engine():
+    return TTSBaseEngine("Base", "1.7B")
 
 
 def _init_processor():
@@ -55,9 +55,6 @@ def tts_clone(
     ),
     emotion_priority: bool = typer.Option(
         False, "--emotion-priority", help="情绪优先模式（忽略基础音色描述）"
-    ),
-    model_size: str = typer.Option(
-        "1.7B", "--model-size", help="模型大小（0.6B / 1.7B）"
     ),
     reference_audio: Optional[str] = typer.Option(
         None, "--ref", help="直接指定参考音频路径（绝对或相对项目根目录）"
@@ -109,7 +106,7 @@ def tts_clone(
         raw = " ".join(filter(None, [tone or "", emotion or ""]))
         final_instruct = f"{base_instruct} {raw}".strip()
 
-    engine = _init_engine(model_size)
+    engine = _init_engine()
     processor = _init_processor()
     cloner = CloneMode(engine, processor)
 
@@ -128,7 +125,7 @@ def tts_clone(
         TimeElapsedColumn(),
         console=console,
     ) as pbar:
-        pbar.add_task(f"[cyan]加载模型 {model_size}...", total=None)
+        pbar.add_task("[cyan]加载模型 Base-1.7B...", total=None)
         input_instruct = f"<|im_start|>user\n{final_instruct}<|im_end|>\n"
         input_objs = engine.processor(
             text=input_instruct, return_tensors="pt", padding=True
@@ -171,9 +168,6 @@ def tts_design(
     emotion: Optional[str] = typer.Option(
         None, "--emotion", help="情绪标签（如「温柔，安抚」）"
     ),
-    model_size: str = typer.Option(
-        "1.7B", "--model-size", help="模型大小（0.6B / 1.7B）"
-    ),
     commit_to_temp: bool = typer.Option(
         False, "--commit", help="确认满意后存入标准样音库（assets/temp/）"
     ),
@@ -187,7 +181,7 @@ def tts_design(
     if not text.strip():
         text = _default_design_text()
 
-    engine = TTSBaseEngine("VoiceDesign", model_size)
+        engine = TTSBaseEngine("VoiceDesign", "1.7B")
     processor = _init_processor()
     designer = DesignMode(engine, processor)
 
@@ -206,7 +200,7 @@ def tts_design(
         TimeElapsedColumn(),
         console=console,
     ) as pbar:
-        pbar.add_task(f"[cyan]加载 VoiceDesign 模型 {model_size}...", total=None)
+        pbar.add_task("[cyan]加载 VoiceDesign 模型 1.7B...", total=None)
         wavs, sr = designer.run(text=text, lang="Chinese", instruct=instruct)
 
         pbar.add_task("[cyan]保存并净化音频...", total=None)
