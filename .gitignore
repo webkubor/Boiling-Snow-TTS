@@ -1,4 +1,8 @@
-__pycache__/
+# --- 构建产物 ---
+boiling_snow_tts.egg-info/
+audio_extract_workspace/
+
+
 *.py[cod]
 *$py.class
 *.so

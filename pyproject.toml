@@ -10,7 +10,6 @@ readme = "README.md"
 requires-python = ">=3.10"
 classifiers = [
   "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
@@ -22,7 +21,6 @@ authors = [{ name = "Webkubor" }]
 dependencies = [
   "transformers==4.57.3",
   "accelerate==1.12.0",
-  "gradio",
   "fastapi",
   "uvicorn",
   "python-multipart",
@@ -33,6 +31,8 @@ dependencies = [
   "onnxruntime",
   "einops",
   "pydub",
+  "typer>=0.12",
+  "rich>=13.0",
 ]
 
 [project.urls]
@@ -40,10 +40,11 @@ Homepage = "https://github.com/webkubor/Boiling-Snow-TTS"
 Repository = "https://github.com/webkubor/Boiling-Snow-TTS"
 
 [project.scripts]
+tts = "cli.app:app"
 qwen-tts-demo = "qwen_tts.cli.demo:main"
 
 [tool.setuptools]
-packages = { find = { where = ["."] , include = ["qwen_tts*"] } }
+packages = { find = { where = ["."] , include = ["qwen_tts*", "cli*"] } }
 include-package-data = true
 
 [tool.setuptools.package-data]
