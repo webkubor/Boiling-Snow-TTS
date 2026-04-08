@@ -1,8 +1,8 @@
-# Boiling-Snow-TTS (Wuxia Voice Generation Engine)
+# Boiling-Snow-TTS (Professional Chinese Voice Generation Engine)
 
 [中文文档](README.md) | English
 
-This project is a custom-tailored **AI Voice Generation Engine** designed for high-quality Wuxia (Chinese martial arts) content. Powered by Alibaba's Qwen3-TTS, it has been heavily refactored to provide a professional, automated pipeline for cinematic voiceover production on Apple Silicon.
+This project is a custom-tailored **AI Voice Generation Engine** designed for high-quality Chinese content production. Powered by Alibaba's Qwen3-TTS, it has been heavily refactored to provide a professional, automated pipeline for cinematic voiceover production on Apple Silicon.
 
 ---
 

@@ -4,7 +4,7 @@
 > 请优先阅读 [.agent/PROJECT.md](.agent/PROJECT.md) 获取上下文与任务索引。
 
 # 🏔️ Boiling-Snow-TTS
-> **工业级武侠语音合成引擎 | 专为 Apple Silicon 深度优化 | 基于 Qwen3-TTS**
+> **工业级中文语音合成引擎 | 专为 Apple Silicon 深度优化 | 基于 Qwen3-TTS**
 
 <p align="center">
   <img src="assets/cover.jpg" width="100%" alt="Boiling-Snow-TTS Cover"/>
@@ -14,7 +14,7 @@
 [![Python](https://img.shields.io/badge/Python-3.9%2B-green.svg)](pyproject.toml)
 [![Platform](https://img.shields.io/badge/Platform-macOS%20(M1/M2/M3)-black.svg)](#-硬件加速优化-hardware-acceleration)
 
-**Boiling-Snow-TTS** 是一个面向专业创作的 AI 配音解决方案。它继承了 Qwen3-TTS 的强大能力，并通过深度重构，为《沸腾之雪》等高品质武侠内容提供具备“导演级”控制力的中文配音。
+**Boiling-Snow-TTS** 是一个面向专业创作的 AI 配音解决方案。它继承了 Qwen3-TTS 的强大能力，并通过深度重构，为高品质中文内容提供具备“导演级”控制力的语音合成能力。
 
 ---
 
@@ -185,4 +185,3 @@ npm run web:build
 本项目基于阿里巴巴 **Qwen3-TTS** 二次开发，遵循 [Apache-2.0 License](LICENSE)。
 
 ---
-*雪落江湖，热血难凉。*
