@@ -3,9 +3,9 @@ requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "boiling-snow-tts"
+name = "snowvoice-studio"
 version = "0.1.0"
-description = "An AI voice generation engine tailored for Wuxia content, powered by Qwen3-TTS."
+description = "Open-source Chinese TTS workstation for humans, AI, and agents. CLI first, WebUI on the roadmap."
 readme = "README.md"
 requires-python = ">=3.10"
 classifiers = [
@@ -36,10 +36,11 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/webkubor/Boiling-Snow-TTS"
-Repository = "https://github.com/webkubor/Boiling-Snow-TTS"
+Homepage = "https://github.com/webkubor/snowvoice-studio"
+Repository = "https://github.com/webkubor/snowvoice-studio"
 
 [project.scripts]
+snowvoice = "cli.app:app"
 tts = "cli.app:app"
 qwen-tts-demo = "qwen_tts.cli.demo:main"
 

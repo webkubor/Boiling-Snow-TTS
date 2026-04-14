@@ -10,7 +10,10 @@
   - `personas.json`
 
 ## 调用方式
-- 推荐：`python main.py clone|design|dialogue`
+- 推荐：
+  - `snowvoice clone ...`
+  - `snowvoice design ...`
+  - `python main.py dialogue`
 
 ## 规则
 - 运行前会执行内置策略校验（字段完整性、文本长度、角色合法性、禁用关键词）。

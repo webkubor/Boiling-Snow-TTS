@@ -1,77 +1,92 @@
-# Boiling-Snow-TTS (Professional Chinese Voice Generation Engine)
+# SnowVoice Studio
 
-[中文文档](README.md) | English
+An open-source Chinese TTS workstation built for humans, AI, and agents.
 
-This project is a custom-tailored **AI Voice Generation Engine** designed for high-quality Chinese content production. Powered by Alibaba's Qwen3-TTS, it has been heavily refactored to provide a professional, automated pipeline for cinematic voiceover production on Apple Silicon.
+> Current stage: **CLI works today, WebUI is planned next.**
 
----
+SnowVoice Studio is a local-first wrapper around **Qwen3-TTS**. The goal is simple: install it once, run it locally, and make it easy for both non-technical users and automation agents to use the same workflow.
 
-## 🎯 Key Features & Enhancements
+<p align="center">
+  <img src="assets/cover.jpg" width="100%" alt="SnowVoice Studio Cover"/>
+</p>
 
-This project significantly evolves the original Qwen3-TTS repository into a production-ready toolkit:
+## What it does today
 
-1. **JSON-Driven Architecture**: Total decoupling of creative content from code. Manage episodes, characters, and emotions via runtime JSON configs.
-2. **Apple Silicon Native Acceleration**: Fully optimized for **M1/M2/M3** chips. Implements `MPS` hardware acceleration and `SDPA` (Scaled Dot Product Attention), bypassing the NVIDIA CUDA requirement.
-3. **Unified Quaternary Engine**: Seamlessly handles "Voice Cloning", "Voice Design", "Dialogue Theatre", and "Podcast Column" modes within a single command (`main.py`).
-4. **AI Auto-Processing (Ref-Opt)**: Built-in intelligent audio preprocessing. Automatically applies a **1.5s safety offset**, strips background noise, and normalizes clips to lossless WAV format.
-5. **Smart Caching**: Implements a timestamp-based caching system in `assets/temp/`, enabling instant repeated generation by skipping redundant audio processing.
+- Local Chinese TTS with a clear CLI entrypoint: `snowvoice`
+- Voice cloning from registered personas and cached reference audio
+- Voice design from text prompts
+- Dialogue generation through the current `main.py` flow
 
----
+## Quick Start
 
-## ⚔️ Core Modules
-
-The engine isolates four major functionalities to ensure modularity and creative control:
-
-### 1. Voice Cloning (`Base` Mode)
-- **Logic**: Replicates specific voices from reference samples.
-- **Workflow**: Drop a raw audio file into `assets/reference_audio/` named as `{Character}_参考.wav`. The AI handles the rest.
-
-### 2. Voice Design (`VoiceDesign` Mode)
-- **Logic**: Generates unique voices from scratch using text prompts (e.g., "A deep, raspy voice of a 50-year-old master").
-- **Workflow**: Ideal for casting new characters without human references.
-
-### 3. Dialogue Theatre (`Dialogue`)
-- **Logic**: Supports multi-character scripts with automatic scene stitching.
-- **Workflow**: Define a list of `lines` in the config; the AI manages character switches and inserts natural breathing pauses.
-
-### 4. Podcast Column (`Podcast`)
-- **Logic**: Specialized mode for the *"Jianghu Sound Picker"* series.
-- **Workflow**: Locked identity (Yue Qizhou) with professional radio-style post-tuning.
-
----
-
-## 🤖 Models Gallery
-
-- **1.7B Tier (Full - Recommended)**: Professional-grade engines. Supports fine-grained `emotion` and `tone` instructions.
-- **0.6B Tier (Lite)**: Rapid prototyping engines. Low memory footprint (~2GB) and ultra-fast generation.
-
----
-
-## 📥 Model Downloads
-
-Download weights and place them in the `models/` directory:
-
-| Model | Directory | Use Case |
-| :--- | :--- | :--- |
-| **Qwen3-TTS-1.7B-Base** | `models/Base-1.7B` | High-quality cloning |
-| **Qwen3-TTS-1.7B-VoiceDesign** | `models/VoiceDesign-1.7B` | Voice creation |
-
----
-
-## 🚀 Quick Start
-
-### 1. One-Click Setup
 ```bash
-chmod +x install.sh && ./install.sh
-```
-
-### 2. Run the Engine
-```bash
+git clone https://github.com/webkubor/snowvoice-studio.git
+cd snowvoice-studio
+chmod +x install.sh
+./install.sh
 source .venv/bin/activate
-# For Micro-movies
-python main.py
-# For Podcast series
+snowvoice --help
 ```
 
----
-*License: Apache-2.0*
+## Minimal agent bootstrap
+
+```bash
+git clone https://github.com/webkubor/snowvoice-studio.git
+cd snowvoice-studio
+./install.sh
+source .venv/bin/activate
+snowvoice --help
+```
+
+## Main commands
+
+```bash
+snowvoice voice list
+snowvoice clone <persona> "Hello from SnowVoice Studio"
+snowvoice design <voice_name> "This is a short modeling sentence" --tone "warm, clean, intimate"
+python main.py dialogue
+```
+
+## Status
+
+| Capability | Status | Notes |
+| :--- | :--- | :--- |
+| CLI | Available | Primary interface |
+| Voice cloning | Available | Persona-based workflow |
+| Voice design | Available | Text-to-voice design |
+| Dialogue | Available | Current entry is `python main.py dialogue` |
+| WebUI | Planned | Roadmap item, not shipped yet |
+
+## Roadmap
+
+### Phase 1: Rename and cleanup
+
+- [x] Rename repository to `snowvoice-studio`
+- [x] Rename Python package to `snowvoice-studio`
+- [x] Rename the main CLI entry to `snowvoice`
+- [x] Rewrite README for beginners and agents
+
+### Phase 2: CLI hardening
+
+- [ ] Add `snowvoice doctor`
+- [ ] Add `snowvoice init`
+- [ ] Add a proper `dialogue` CLI subcommand
+- [ ] Improve error messages for setup and runtime failures
+
+### Phase 3: WebUI MVP
+
+- [ ] Upload reference audio in the browser
+- [ ] Configure clone / design / dialogue jobs in a form
+- [ ] Preview, download, and inspect outputs in the browser
+- [ ] Reuse the same engine as the CLI
+
+### Phase 4: Agent automation
+
+- [ ] Support fully non-interactive installation
+- [ ] Define stable task input / output contracts
+- [ ] Make model, config, and output discovery agent-friendly
+- [ ] Add minimal automation examples
+
+## License
+
+[Apache-2.0](LICENSE)

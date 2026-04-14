@@ -180,8 +180,7 @@ def tts_design(
     instruct = _build_instruct(tone or "", emotion or "")
     if not text.strip():
         text = _default_design_text()
-
-        engine = TTSBaseEngine("VoiceDesign", "1.7B")
+    engine = TTSBaseEngine("VoiceDesign", "1.7B")
     processor = _init_processor()
     designer = DesignMode(engine, processor)
 

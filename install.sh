@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-echo "⚔️ Welcome to Boiling-Snow-TTS Setup / 欢迎使用沸腾之雪武侠配音引擎安装向导 ⚔️"
+echo "❄️ Welcome to SnowVoice Studio Setup / 欢迎使用 SnowVoice Studio 安装向导 ❄️"
 echo "=========================================================================="
 
 # 1. Check for Python
@@ -38,4 +38,4 @@ python -m modelscope.cli.cli download --model Qwen/Qwen3-TTS-12Hz-1.7B-Base --lo
 echo "=========================================================================="
 echo "✨ Setup Complete! / 安装完成！"
 echo "解码器（Tokenizer）已随模型自动下载。"
-echo "To start: source .venv/bin/activate && python main.py"
+echo "To start: source .venv/bin/activate && snowvoice --help"

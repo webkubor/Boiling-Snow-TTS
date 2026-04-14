@@ -1,8 +1,10 @@
-# TUI 设计文档 — boiling-snow-tts
+# TUI 设计文档 — SnowVoice Studio
 
-> 本文档描述将 boiling-snow-tts 改造为 TUI（终端用户界面）CLI 服务的完整设计方案。
+> 本文档描述将 SnowVoice Studio 改造为 TUI（终端用户界面）CLI 服务的完整设计方案。
 > 目标：在现有 `core/` 后端不变的前提下，用 `typer` + `rich` + `textual` 构建一套
 > 本地音色素材管理 + TTS 生产工作流的终端交互系统。
+>
+> 说明：本文档里历史上出现的旧命令别名 `bsm`，现统一视为 `snowvoice`。
 
 ---
 
@@ -150,7 +152,7 @@ CLI 入口（typer）
 
 ### 音色注册表
 
-路径：`~/.config/boiling-snow-tts/registry.json`（或项目内 `configs/personas.json`）
+路径：`~/.config/snowvoice-studio/registry.json`（或项目内 `configs/personas.json`）
 
 ```json
 {
@@ -231,7 +233,7 @@ CLI 入口（typer）
 新增文件，现有 `core/` 不动：
 
 ```
-boiling-snow-tts/
+snowvoice-studio/
 ├── cli/                         # 新增：CLI 主体
 │   ├── __init__.py
 │   ├── app.py                   # typer App 定义，子命令注册

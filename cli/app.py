@@ -5,8 +5,8 @@ from cli.commands.job import app as job_app
 from cli.commands.preset import app as preset_app
 
 app = typer.Typer(
-    name="tts",
-    help="[bold gold1]TTS CLI[/bold gold1] — 本地音色管理与语音合成工具",
+    name="snowvoice",
+    help="[bold cyan]SnowVoice CLI[/bold cyan] — 面向人类、AI 与 agent 的本地语音工作台",
     add_completion=False,
 )
 app.add_typer(voice_app, name="voice")
@@ -19,7 +19,7 @@ app.command("design")(tts_design)
 @app.callback(invoke_without_command=True)
 def main(ctx: typer.Context):
     """
-    tts — TTS CLI
+    snowvoice — SnowVoice CLI
 
     子命令组：
       voice      音色素材管理（list / add / preview / show / rm / import）
@@ -27,7 +27,6 @@ def main(ctx: typer.Context):
       design     从文字描述设计新音色
       preset     预设管理（list / show / run / batch）
       job        任务历史（list / show / clean）
-      ui         启动全屏 TUI 界面
     """
     if ctx.invoked_subcommand is None:
         typer.echo(ctx.get_help())
