@@ -1,168 +1,125 @@
 # SnowVoice Studio
 
-开源中文语音工作台，给人类、AI、agent 都能直接安装和运行。
+> "本地跑中文 TTS，不是 Python 版本对不上，就是模型只支持普通话，
+> 要么命令行一片空白。配了一下午，听到的第一句话是机器人读错字。"
 
-> 当前阶段：**CLI 可用，WebUI 进入规划阶段。**
->  
-> 本项目基于阿里巴巴开源的 **Qwen3-TTS** 二次开发，先把“本地可跑、命令清晰、适合自动化”做好，再补完整 WebUI。
+一条命令装好，一条命令出音频。基于 **Qwen3-TTS**，支持中文方言、声音克隆、多角色对话。
+给人类用，也给 AI / agent 直接调用。
 
 <p align="center">
-  <img src="assets/cover.jpg" width="100%" alt="SnowVoice Studio Cover"/>
+  <img src="assets/cover.jpg" width="100%" alt="SnowVoice Studio"/>
 </p>
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-green.svg)](pyproject.toml)
 [![Platform](https://img.shields.io/badge/Platform-macOS%20Apple%20Silicon-black.svg)](pyproject.toml)
 
-[English README](README_EN.md)
+[English README](README_EN.md) · 姊妹项目：[snow-asr](../snow-asr)（语音转文字）
 
-## 这个项目现在解决什么问题
+---
 
-- 让非技术用户也能在本地跑通中文 TTS，不需要自己拼环境。
-- 让 AI / agent 可以用稳定命令自动安装、自动调用、自动出音频。
-- 把“声音克隆、音色设计、对话生成”统一到一个开源工作台里。
-
-## 当前状态
-
-| 能力 | 状态 | 说明 |
-| :--- | :--- | :--- |
-| CLI | 已可用 | 主入口为 `snowvoice` |
-| 声音克隆 | 已可用 | 支持复用 `personas.json` 与标准样音 |
-| 音色设计 | 已可用 | 支持文字描述生成新音色 |
-| 对话生成 | 已可用 | 当前走 `python main.py dialogue` |
-| WebUI | 规划中 | 本次先把命名、定位和路线图理顺 |
-
-## 3 分钟上手
-
-### 1. 克隆仓库
+## 一分钟装好
 
 ```bash
 git clone https://github.com/webkubor/snowvoice-studio.git
 cd snowvoice-studio
-```
-
-### 2. 一键安装
-
-```bash
-chmod +x install.sh
-./install.sh
-```
-
-安装脚本会自动完成这些事：
-
-- 创建 `.venv`
-- 安装 Python 依赖
-- 安装项目本体
-- 下载基础模型到 `models/`
-
-### 3. 激活并查看命令
-
-```bash
+chmod +x install.sh && ./install.sh
 source .venv/bin/activate
 snowvoice --help
 ```
 
-## 给 AI / agent 的最短启动路径
+脚本自动完成：创建 `.venv` → 安装依赖 → 下载基础模型。
+
+---
+
+## 真实效果
 
 ```bash
-git clone https://github.com/webkubor/snowvoice-studio.git
-cd snowvoice-studio
-./install.sh
-source .venv/bin/activate
-snowvoice --help
+# 克隆已有角色音色生成台词
+snowvoice clone narrator "霜叶红于二月花，山色空蒙雨亦奇"
+# → out/narrator_20260421_143201.wav  [2.3s]
+
+# 用文字描述设计新音色
+snowvoice design xiao_jing "这是一段建模短句" --tone "温柔、清晰、偏少女"
+# → voice 'xiao_jing' saved to personas.json
+
+# 多角色对白
+snowvoice dialogue --script scripts/chapter_01.txt
+# → out/dialogue_20260421_143502/  (5 files merged)
 ```
 
-如果要直接执行现有能力，优先用下面这些入口：
+---
 
-```bash
-# 查看音色
-snowvoice voice list
+## 当前能力
 
-# 用已有 persona 克隆一段语音
-snowvoice clone <persona> "你好，欢迎使用 SnowVoice Studio"
+| 功能 | 状态 | 命令 |
+|:---|:---:|:---|
+| 声音克隆（角色复用） | ✅ | `snowvoice clone <persona> "台词"` |
+| 音色设计（文字描述） | ✅ | `snowvoice design <name> "短句" --tone` |
+| 多角色对话生成 | ✅ | `snowvoice dialogue --script` |
+| 音色列表管理 | ✅ | `snowvoice voice list` |
+| 环境自检 | 🚧 | `snowvoice doctor`（Phase 2）|
+| WebUI | 📋 | Phase 3 |
 
-# 设计新音色
-snowvoice design <voice_name> "这是一段建模短句" --tone "温柔、清晰、贴耳"
+---
 
-# 跑对话模式
-python main.py dialogue
-```
+## 为什么选 Qwen3-TTS
+
+- 中文 52 种方言支持（普通话 / 粤语 / 闽南语 / 吴语…）
+- Apple Silicon MPS 加速，M 系芯片本地实时推理
+- 完全开源，不需要联网，不需要 API Key
+
+---
 
 ## 项目结构
 
-```text
+```
 snowvoice-studio/
-├── cli/                 # CLI 入口与命令
-├── core/                # 语音引擎、模式调度、音频处理
-├── configs/             # 运行配置与 personas 映射
-├── assets/              # 参考音频、标准样音、产出音频
-├── models/              # 本地模型目录
-├── out/                 # 默认输出目录
-└── qwen_tts/            # 上游模型适配代码
+├── cli/            # CLI 入口与子命令
+├── core/           # 语音引擎 / 模式调度 / 音频处理
+├── configs/        # 运行配置与 personas 映射
+├── assets/         # 参考音频 / 标准样音 / 产出
+├── models/         # 本地模型目录
+└── out/            # 默认输出目录
 ```
 
-## 已有功能
+---
 
-### 1. 声音克隆
+## 给 AI / Agent 调用
 
-- 从已有角色样音出发生成新台词
-- 优先复用 `assets/temp/` 中的标准样音
-- 支持 `personas.json` 做角色映射
+项目根目录提供 `.claude/skills/tts.md`，Claude Code 可以直接读取后无歧义执行 TTS 任务：
 
-### 2. 音色设计
+```bash
+# Claude Code 调用示例
+snowvoice clone <persona> "<台词>" -o <output.wav>
+```
 
-- 用文字描述直接生成新音色
-- 可选择沉淀到标准样音库
-- 适合先试听，再批量进入生产
+Agent 调用前请先确认 `source .venv/bin/activate` 已执行，或使用 `.venv/bin/snowvoice`。
 
-### 3. 对话生成
-
-- 支持多角色脚本
-- 适合剧情对白、短剧、播客片段
-- 当前入口仍是 `python main.py dialogue`
+---
 
 ## 路线图
 
-### Phase 1：命名与基础清理
+- [x] Phase 1 — 命名统一、README 清晰化
+- [x] Phase 2a — CLI 稳定（clone / design / dialogue / voice list）
+- [ ] Phase 2b — `snowvoice doctor` 环境自检
+- [ ] Phase 3 — WebUI MVP（上传音频 / 试听 / 下载）
+- [ ] Phase 4 — Agent 无交互安装模式
 
-- [x] 仓库统一改名为 `snowvoice-studio`
-- [x] Python 包名统一为 `snowvoice-studio`
-- [x] CLI 主入口统一为 `snowvoice`
-- [x] README 改成对小白和 AI / agent 友好的表达
+---
 
-### Phase 2：CLI 稳定化
+## 适合谁
 
-- [ ] 增加 `snowvoice doctor` 环境检查
-- [ ] 增加 `snowvoice init` 一键初始化
-- [ ] 补齐 `dialogue` 的 CLI 子命令
-- [ ] 为常见报错提供更直接的提示
+- 本地跑中文配音的创作者（有声书 / 短剧 / 游戏 NPC）
+- 想把配音流程接给 AI 助手的开发者
+- 武侠 / 古风 / 方言内容生产者
 
-### Phase 3：WebUI MVP
+---
 
-- [ ] 本地上传参考音频
-- [ ] 页面填写克隆 / 设计 / 对话参数
-- [ ] 页面直接试听、下载和查看任务结果
-- [ ] WebUI 与 CLI 共用同一套核心引擎
+## License
 
-### Phase 4：Agent 自动化
+Apache-2.0 · 基于 Qwen3-TTS 二次开发
 
-- [ ] 提供无交互安装模式
-- [ ] 提供稳定的任务输入 / 输出约定
-- [ ] 让 agent 能自动发现模型、配置和产出目录
-- [ ] 为自动化调用补最小可用文档与样例
+---
 
-## 适合谁用
-
-- 想本地跑中文 TTS 的创作者
-- 想把配音流程接给 AI 助手的个人开发者
-- 想先从 CLI 跑通，再逐步接 WebUI 的小团队
-
-## 开源说明
-
-- License: [Apache-2.0](LICENSE)
-- 上游基础：Qwen3-TTS
-- 本项目定位：开源、本地优先、自动化友好
-
-## 命令速查
-
-完整命令请看 [docs/COMMANDS.md](docs/COMMANDS.md)。
+**完整命令参考 → [docs/COMMANDS.md](docs/COMMANDS.md)**
